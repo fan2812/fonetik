@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Log Database - Penelusuran Fonetik{% endblock %}
+
+{% block brand_title %}Admin Panel - Penelusuran Fonetik{% endblock %}
+
+{% block navbar_buttons %}
+    {% if from_page == 'logo' %}
+    <a href="{% url 'logo_search' %}" class="btn-nav-custom btn-nav-light">
+        <i class="bi bi-search"></i> Cari Logo
+    </a>
+    <a href="{% url 'logo_upload' %}" class="btn-nav-custom btn-nav-light">
+        <i class="bi bi-image"></i> Update DB Logo
+    </a>
+    {% else %}
+    <a href="{% url 'search_view' %}" class="btn-nav-custom btn-nav-light">
+        <i class="bi bi-soundwave"></i> Cari Merek
+    </a>
+    <a href="{% url 'upload_database' %}" class="btn-nav-custom btn-nav-light">
+        <i class="bi bi-cloud-arrow-up-fill"></i> Update DB Merek
+    </a>
+    {% endif %}
+    <form action="{% url 'logout' %}" method="post" class="d-inline m-0 p-0">
+        {% csrf_token %}
+        <button type="submit" class="btn-nav-custom btn-nav-danger">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+    </form>
+{% endblock %}
+
+{% block extra_style %}
+<style>
+    body { padding-top: 110px; background-color: #f8f9fa; }
+
+    .stats-card { border: none; border-radius: 12px; padding: 24px; color: white; transition: transform 0.2s; }
+    .stats-card:hover { transform: translateY(-5px); }
+    .bg-custom-blue  { background: linear-gradient(135deg, #313E5E 0%, #4a5a8a 100%); }
+    .bg-custom-green { background: linear-gradient(135deg, #28a745 0%, #34ce57 100%); }
+    .stats-label { font-size: 0.85rem; font-weight: 600; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stats-value { font-size: 2.2rem; font-weight: 800; margin-top: 5px; }
+    .stats-icon  { font-size: 2.5rem; opacity: 0.3; }
+
+    .log-card { background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: none; overflow: hidden; }
+    .thead-custom th { background-color: #f8f9fa; color: #313E5E; font-weight: 700; border-bottom: 2px solid #dee2e6; padding: 15px; }
+    .table td { vertical-align: middle; padding: 15px; font-size: 0.9rem; }
+    .badge-status { padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 0.75rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mb-5">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h3 class="fw-bold text-dark mb-1">Riwayat Pembaruan Database</h3>
+            <p class="text-muted mb-0">Pantau aktivitas CRUD dan upload database secara real-time.</p>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="stats-card bg-custom-blue shadow-sm d-flex justify-content-between align-items-center">
+                <div>
+                    {% if from_page == 'fonetik' %}
+                    <div class="stats-label">Total Merek Terdaftar</div>
+                    <div class="stats-value">{{ total_brands|default:0 }}</div>
+                    {% else %}
+                    <div class="stats-label">Total Logos Terdaftar</div>
+                    <div class="stats-value">{{ total_logos|default:0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="stats-icon"><i class="bi bi-database-check"></i></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="stats-card bg-custom-green shadow-sm d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="stats-label">Total Aktivitas Log</div>
+                    <div class="stats-value">{{ total_logs|default:0 }}</div>   
+                </div>
+                <div class="stats-icon"><i class="bi bi-clock-history"></i></div>
+            </div>
+        </div>
+    </div>
+
+{% if from_page == 'fonetik' %}
+<div class="log-card shadow-sm mt-4" id="kelola-merek">
+    <div class="p-4 pb-0">
+        <h5 class ="fw-bold text-dark mb-3">Kelola Merek Terdaftar</h5>
+        <form method="GET" action="{% url 'database_log' %}#kelola-merek" class="mb-3" style="max-width: 400px;">
+            <input type="hidden" name="from" value="fonetik">
+            <div class="input-group">
+                <input type="text" name="mq" class="form-control" placeholder="Cari merek..." value="{{ merek_query }}">
+                <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="thead-custom">
+                <tr>
+                    <th class="ps-4">Nama Merek</th>
+                    <th>Tanggal Ditambahkan</th>
+                    <th class="pe-4">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for merek in merek_list %}
+                <tr id="merek-row-{{merek.id}}">
+                    <td class="ps-4">{{ merek.nama_merek }}</td>
+                    <td class="text-muted">{{ merek.created_at|date:"d M Y H:i" }}</td>
+                    <td class="pe-4 text-end">
+                        <button class="btn btn-sm btn-outline-primary me-1"
+                        onclick="openEditMerek({{ merek.id }}, '{{ merek.nama_merek }}')">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger"       
+                        onclick="deleteMerek({{ merek.id }}, '{{merek.nama_merek}}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>   
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="text-center py-4 text-muted">Tidak ada merek ditemukan.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        <div id="editModal" style="display:none; position:fixed; inset:0; z-index:99999;
+    background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+    <div style="background:white; border-radius:12px; padding:28px; width:360px;">
+        <h6 class="fw-bold mb-3">Edit Nama Merek</h6>
+        <input type="text" id="editMerekInput" class="form-control mb-3">
+        <input type="hidden" id="editMerekId">
+        <div class="d-flex gap-2 justify-content-end">
+            <button class="btn btn-secondary btn-sm" onclick="closeEditMerek()">Batal</button>
+            <button class="btn btn-primary btn-sm" onclick="submitEditMerek()">Simpan</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+function openEditMerek(id, nama) {
+    document.getElementById('editMerekId').value = id;
+    document.getElementById('editMerekInput').value = nama;
+    document.getElementById('editModal').style.display = 'flex';
+}
+function closeEditMerek() {
+    document.getElementById('editModal').style.display = 'none';
+}
+async function submitEditMerek() {
+    const id = document.getElementById('editMerekId').value;
+    const namaBaru = document.getElementById('editMerekInput').value.trim();
+    const fd = new FormData();
+    fd.append('nama_merek', namaBaru);
+    const res = await fetch(`/merek/edit/${id}/`, {
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        body: fd
+    });
+    const data = await res.json();
+    if (data.status === 'ok') {
+        document.querySelector(`#merek-row-${id} td:first-child`).textContent = data.nama_baru;
+        closeEditMerek();
+    } else {
+        alert(data.message);
+    }
+}
+async function deleteMerek(id, nama) {
+    if (!confirm(`Apakah Anda yakin ingin menghapus merek "${nama}"? Tindakan ini tidak dapat dibatalkan.`)) return;
+    const res = await fetch(`/merek/delete/${id}/`, {
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+    });
+    const data = await res.json();
+    if (data.status === 'ok') {
+        document.getElementById('merek-row-' + id).remove();
+    } else {
+        alert(data.message);
+    }
+}
+</script>
+
+{% endif %}
+    <div class="log-card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="thead-custom">
+                    <tr>
+                        <th class="ps-4">WAKTU</th>
+                        <th>ADMIN</th>
+                        <th>SUMBER/FILE</th>
+                        <th>STATUS</th>
+                        <th class="pe-4">CATATAN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr>
+                        <td class="ps-4 fw-bold text-secondary">
+                            {{ log.timestamp|date:"d M Y" }}<br>
+                            <small class="fw-normal text-muted">{{ log.timestamp|date:"H:i:s" }}</small>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person-circle me-2 text-primary"></i>
+                                {{ log.admin_user.username|default:"System" }}
+                            </div>
+                        </td>
+                        <td><code class="text-dark">{{ log.filename }}</code></td>
+                        <td>
+                            {% if log.status == 'success' %}
+                                <span class="badge bg-success-subtle text-success badge-status">SUCCESS</span>
+                            {% else %}
+                                <span class="badge bg-danger-subtle text-danger badge-status">FAILED</span>
+                            {% endif %}
+                        </td>
+                        <td class="pe-4">
+                            <small class="text-muted">{{ log.notes|default:"-" }}</small>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            <div class="text-muted">
+                                <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                                Belum ada riwayat aktivitas.
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

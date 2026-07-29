@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Penelusuran Fonetik - Hasil Analisis{% endblock %}
+
+{% block brand_title %}
+    {% if user.is_staff %}Admin Panel - {% endif %}Penelusuran Fonetik
+{% endblock %}
+
+{% block navbar_buttons %}
+    {% if user.is_authenticated %}
+        {% if user.is_staff %}
+        <a href="{% url 'upload_database' %}" class="btn-nav-custom btn-nav-light">
+            <i class="bi bi-cloud-arrow-up-fill"></i> Update DB Merek
+        </a>
+        <a href="{% url 'database_log' %}?from=fonetik" class="btn-nav-custom btn-nav-light">
+            <i class="bi bi-journal-text"></i> Log Database
+        </a>
+        {% endif %}
+        <form action="{% url 'logout' %}" method="post" class="d-inline m-0 p-0">
+            {% csrf_token %}
+            <button type="submit" class="btn-nav-custom btn-nav-danger">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn-nav-custom btn-nav-white">Login Admin</a>
+    {% endif %}
+{% endblock %}
+
+{% block extra_style %}
+<style>
+    .search-section { background-color: white; border: 1px solid #eee; }
+    .search-container { position: relative; display: flex; flex-grow: 1; }
+    .search-input {
+        border-radius: 10px 0 0 10px;
+        border: 2px solid #313E5E;
+        padding: 15px; padding-right: 45px; width: 100%;
+    }
+    .search-input:focus { outline: none !important; box-shadow: none !important; border-color: #313E5E !important; }
+    .btn-clear {
+        position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+        background: none; border: none; color: #313E5E; font-size: 1.2rem;
+        cursor: pointer; z-index: 10; display: none;
+        /* Tab tidak akan fokus ke sini */
+        tabindex: -1;
+    }
+    .btn-search { border-radius: 0 10px 10px 0; background-color: #313E5E; color: white; padding: 0 30px; font-weight: bold; }
+    .btn-search:hover { background-color: #232c45; color: white; }
+    .stats-card { border: none; border-radius: 12px; background-color: white; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); height: 100%; }
+    .stats-label { font-size: 0.75rem; color: #888; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+    .stats-value { font-size: 1.8rem; font-weight: 800; color: #313E5E; margin-top: 5px; }
+    .table-container { background: white; border-radius: 15px; overflow: hidden; border: 1px solid #eee; }
+    .thead-dark, .thead-dark tr {  
+        background: linear-gradient(135deg, #FFCD02 0%, #FFCD02 30%, #c9a200 42%, #313E5E 70%);
+        border: none;
+    }
+    .thead-dark th { background-color: transparent !important; background-image: none !important; color: white; border: none; padding: 18px; font-size: 0.9rem; text-shadow: 0 1px 2px rgba(0,0,0,0.3); 
+    }
+    .thead-dark th:first-child {
+        border-top-left-radius: 8px;
+    }
+    .thead-dark th:last-child {
+        border-top-right-radius: 8px;
+    }
+    .row-high { background-color: #fff5f5 !important; }
+    .row-mid  { background-color: #fffaf0 !important; }
+    .score-badge { padding: 8px 16px; border-radius: 50px; font-weight: 800; display: inline-block; min-width: 80px; text-align: center; }
+    .high-match { background-color: #fce4e4; color: #d9534f; border: 1px solid #f5c2c7; }
+    .mid-match  { background-color: #fff9db; color: #856404; border: 1px solid #ffeeba; }
+
+    /* TAB BAR */
+    .tab-bar { display: flex; gap: 8px; margin-bottom: 20px; margin-top: 28px; }
+    .tab-item {
+        height: 38px; padding: 6px 20px; font-weight: 600; font-size: 14px;
+        color: #6c757d !important; text-decoration: none !important;
+        border-radius: 6px; border: 1.5px solid #dee2e6; background: white;
+        transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+        cursor: pointer;
+    }
+
+    /* Tab Fonetik — hover & active: kuning DJKI */
+    .tab-fonetik:hover,
+    .tab-fonetik.active {
+        color: #313E5E !important;
+        background: #FFCD02;
+        border-color: #FFCD02;
+    }
+
+    /* Tab Logo — hover & active: biru DJKI */
+    .tab-logo:hover,
+    .tab-logo.active {
+        color: white !important;
+        background: #313E5E;
+        border-color: #313E5E;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="container mb-5">
+
+    <div class="tab-bar">
+        <a href="{% url 'search_view' %}" class="tab-item tab-fonetik active">
+            <i class="bi bi-soundwave"></i>Fonetik
+        </a>
+        <a href="{% url 'logo_search' %}" class="tab-item tab-logo">
+            <i class="bi bi-image"></i>Logo
+        </a>
+    </div>
+
+    <div class="search-section shadow-sm" style="border-radius:12px; margin-bottom:20px;">
+        <div style="padding: 24px 28px;">
+            <form method="GET" action="{% url 'search_view' %}" id="searchForm" class="input-group">
+                <div class="search-container">
+                    <input type="text" name="q" id="searchInput" class="form-control search-input"
+                        placeholder="Cari merek..." value="{{ query }}">
+                    <button type="button" id="clearBtn" class="btn-clear" tabindex="-1">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                </div>
+                <button class="btn btn-search" type="submit" tabindex="-1">CARI MEREK</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-6">
+            <div class="stats-card text-center">
+                <div class="stats-label">Total Merek Terdaftar</div>
+                <div class="stats-value">{{ total_database|default:0 }}</div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="stats-card text-center border-start border-danger border-4">
+                <div class="stats-label">Kemiripan Ditemukan</div>
+                <div class="stats-value text-danger">{{ results|length }}</div>
+            </div>
+        </div>
+    </div>
+
+{% if query %}
+<div class="text-muted small mb-3" style="font-size:0.82rem;">
+    <i class="bi bi-info-circle me-1"></i>
+    Menampilkan merek dengan tingkat kemiripan ≥ 75%, maksimal 50 hasil teratas.
+</div>
+{% endif %}
+    <div class="table-container shadow-sm">
+        <table class="table mb-0">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width:40%;" class="ps-4">Merek Input</th>
+                    <th style="width:40%;" class="ps-4">Merek Terdaftar</th>
+                    <th style="width:20%;" class="text-center" id="sortScoreHeader" style="cursor:pointer;">
+                        Skor Kemiripan <i class="bi bi-arrow-down-up" style="font-size:0.75rem;"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in results %}
+                <tr class="{% if item.similarity >= 90 %}row-high{% elif item.similarity >= 80 %}row-mid{% endif %}">
+                    <td class="ps-4 align-middle"><span class="fw-bold text-dark">{{ item.merek_input|upper }}</span></td>
+                    <td class="ps-4 align-middle"><span class="fw-bold text-dark">{{ item.merek_db|upper }}</span></td>
+                    <td class="text-center align-middle">
+                        <div class="score-badge {% if item.similarity >= 90 %}high-match{% else %}mid-match{% endif %}">
+                            {{ item.similarity }}%
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center py-5 text-muted">
+                        {% if query %}Tidak ada kemiripan untuk "<strong>{{ query }}</strong>".
+                        {% else %}Masukkan nama merek untuk mulai pengecekan.{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const clearBtn    = document.getElementById('clearBtn');
+    const searchForm  = document.getElementById('searchForm');
+
+    function toggleClearBtn() {
+        clearBtn.style.display = searchInput.value.length > 0 ? 'block' : 'none';
+    }
+    searchInput.addEventListener('input', toggleClearBtn);
+    window.addEventListener('load', toggleClearBtn);
+
+    // X button: hapus input, jangan submit
+    clearBtn.addEventListener('click', function () {
+        searchInput.value = '';
+        toggleClearBtn();
+        searchInput.focus();
+    });
+
+    // Tab key: jangan pindah fokus — biarkan user selesai mengetik
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+        }
+    });
+
+    searchForm.addEventListener('submit', function() {
+        const btn = this.querySelector('.btn-search');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> MENCARI...';
+    });
+
+    let sortAsc = false;
+    const sortHeader = document.getElementById('sortScoreHeader');
+    if (sortHeader) {
+        sortHeader.addEventListener('click', function() {
+            const tbody = document.querySelector('.table-container tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr')).filter(r => r.querySelector('.score-badge'));
+            sortAsc = !sortAsc;
+            rows.sort((a, b) => {
+                const scoreA = parseFloat(a.querySelector('.score-badge').textContent);
+                const scoreB = parseFloat(b.querySelector('.score-badge').textContent);
+                return sortAsc ? scoreA - scoreB : scoreB - scoreA;
+            });
+            rows.forEach(row => tbody.appendChild(row));
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Terjadi Kesalahan{% endblock %}
+{% block content %}
+<div class="container text-center" style="padding-top:80px;">
+    <h1 style="font-size:5rem; color:#dc3545; font-weight:800;">500</h1>
+    <p class="text-muted mb-4">Terjadi kesalahan pada server. Silakan coba lagi nanti.</p>
+    <a href="{% url 'search_view' %}" class="btn" style="background:#313E5E; color:white; padding:10px 28px; border-radius:8px;">
+        Kembali ke Beranda
+    </a>
+</div>
+{% endblock %}

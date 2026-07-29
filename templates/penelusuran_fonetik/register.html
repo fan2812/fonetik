@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Daftar Akun - Penelusuran Fonetik{% endblock %}
+{% block brand_title %}Penelusuran Fonetik{% endblock %}
+
+{% block navbar_buttons %}
+    <a href="{% url 'search_view' %}" class="btn-nav-custom btn-nav-light">
+        <i class="bi bi-soundwave"></i> Cari Merek
+    </a>
+    <a href="{% url 'login' %}" class="btn-nav-custom btn-nav-white">
+        <i class="bi bi-box-arrow-in-right"></i> Login
+    </a>
+{% endblock %}
+
+{% block extra_style %}
+<style>
+    body { padding-top: 110px; background-color: #f8f9fa; }
+    .register-card {
+        background: white; border-radius: 12px; overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        width: 450px; margin: 0 auto;
+    }
+    .register-banner {
+        background: linear-gradient(135deg, #FFCD02 0%, #FFCD02 30%, #c9a200 42%, #313E5E 70%);
+        color: white; text-align: center; padding: 20px;
+        font-weight: 800; font-size: 1.1rem; letter-spacing: 1px;
+        text-transform: uppercase; text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .register-body { padding: 35px; }
+    label { font-weight: 700; color: #313E5E; font-size: 0.9rem; margin-bottom: 6px; display: block; }
+    input[type="text"], input[type="password"] {
+        width: 100%; padding: 11px 14px; border-radius: 8px;
+        border: 1px solid #ced4da; font-size: 0.95rem; box-sizing: border-box;
+        margin-bottom: 16px; transition: border-color 0.2s;
+    }
+    input[type="text"]:focus, input[type="password"]:focus {
+        outline: none; border-color: #313E5E;
+        box-shadow: 0 0 0 3px rgba(49,62,94,0.1);
+    }
+    .help-text { font-size: 0.78rem; color: #6c757d; margin: -12px 0 14px 0; }
+    .errorlist { list-style: none; padding: 0; margin: -12px 0 10px 0; }
+    .errorlist li { color: #dc3545; font-size: 0.82rem; font-weight: 600; }
+    .btn-register {
+        width: 100%; height: 50px; border-radius: 10px; border: none;
+        background: #313E5E; color: white; font-weight: 800;
+        font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;
+        cursor: pointer; transition: background 0.2s, color 0.2s;
+        margin-top: 4px;
+    }
+    .btn-register:hover { background: #FFCD02; color: #313E5E; }
+    .login-link { text-align: center; margin-top: 20px; font-size: 0.9rem; color: #6c757d; }
+    .login-link a { color: #313E5E; font-weight: 700; text-decoration: none; }
+    .login-link a:hover { text-decoration: underline; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="register-card">
+        <div class="register-banner">Buat Akun Baru</div>
+        <div class="register-body">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div>
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                    <p class="help-text">{{ field.help_text }}</p>
+                    {% endif %}
+                    {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn-register">Buat Akun</button>
+            </form>
+            <div class="login-link">
+                Sudah punya akun? <a href="{% url 'login' %}">Login di sini</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
