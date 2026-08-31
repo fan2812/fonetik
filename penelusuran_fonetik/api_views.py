@@ -1,3 +1,4 @@
+import hashlib
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -52,8 +53,9 @@ def api_search_logo(request):
         return Response({'detail': err_msg}, status=status.HTTP_400_BAD_REQUEST)
 
     # extract_embedding() di ml_engine.py langsung terima raw bytes
+    cache_key = f'logo_search_{hashlib.md5(img_bytes).hexdigest()}'
     query_emb = extract_embedding(img_bytes)
-    hasil     = cari_logo_mirip(query_emb)
+    hasil     = cari_logo_mirip(query_emb, cache_key=cache_key)
 
     return Response({
         'count':   len(hasil),

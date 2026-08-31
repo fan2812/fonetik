@@ -65,7 +65,7 @@
                     <div class="stats-label">Total Merek Terdaftar</div>
                     <div class="stats-value">{{ total_brands|default:0 }}</div>
                     {% else %}
-                    <div class="stats-label">Total Logos Terdaftar</div>
+                    <div class="stats-label">Total Logo Terdaftar</div>
                     <div class="stats-value">{{ total_logos|default:0 }}</div>
                     {% endif %}
                 </div>
@@ -76,113 +76,148 @@
             <div class="stats-card bg-custom-green shadow-sm d-flex justify-content-between align-items-center">
                 <div>
                     <div class="stats-label">Total Aktivitas Log</div>
-                    <div class="stats-value">{{ total_logs|default:0 }}</div>   
+                    <div class="stats-value">{{ total_logs|default:0 }}</div>
                 </div>
                 <div class="stats-icon"><i class="bi bi-clock-history"></i></div>
             </div>
         </div>
     </div>
 
-{% if from_page == 'fonetik' %}
-<div class="log-card shadow-sm mt-4" id="kelola-merek">
-    <div class="p-4 pb-0">
-        <h5 class ="fw-bold text-dark mb-3">Kelola Merek Terdaftar</h5>
-        <form method="GET" action="{% url 'database_log' %}#kelola-merek" class="mb-3" style="max-width: 400px;">
-            <input type="hidden" name="from" value="fonetik">
-            <div class="input-group">
-                <input type="text" name="mq" class="form-control" placeholder="Cari merek..." value="{{ merek_query }}">
-                <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
-            </div>
-        </form>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-hover mb-0">
-            <thead class="thead-custom">
-                <tr>
-                    <th class="ps-4">Nama Merek</th>
-                    <th>Tanggal Ditambahkan</th>
-                    <th class="pe-4">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for merek in merek_list %}
-                <tr id="merek-row-{{merek.id}}">
-                    <td class="ps-4">{{ merek.nama_merek }}</td>
-                    <td class="text-muted">{{ merek.created_at|date:"d M Y H:i" }}</td>
-                    <td class="pe-4 text-end">
-                        <button class="btn btn-sm btn-outline-primary me-1"
-                        onclick="openEditMerek({{ merek.id }}, '{{ merek.nama_merek }}')">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger"       
-                        onclick="deleteMerek({{ merek.id }}, '{{merek.nama_merek}}')">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>   
-                </tr>
-                {% empty %}
-                <tr><td colspan="3" class="text-center py-4 text-muted">Tidak ada merek ditemukan.</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-        <div id="editModal" style="display:none; position:fixed; inset:0; z-index:99999;
-    background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
-    <div style="background:white; border-radius:12px; padding:28px; width:360px;">
-        <h6 class="fw-bold mb-3">Edit Nama Merek</h6>
-        <input type="text" id="editMerekInput" class="form-control mb-3">
-        <input type="hidden" id="editMerekId">
-        <div class="d-flex gap-2 justify-content-end">
-            <button class="btn btn-secondary btn-sm" onclick="closeEditMerek()">Batal</button>
-            <button class="btn btn-primary btn-sm" onclick="submitEditMerek()">Simpan</button>
+    {% if from_page == 'fonetik' %}
+    <div class="log-card shadow-sm mb-4" id="kelola-merek">
+        <div class="p-4 pb-0">
+            <h5 class="fw-bold text-dark mb-3">Kelola Merek Terdaftar</h5>
+            <form method="GET" action="{% url 'database_log' %}#kelola-merek" class="mb-3" style="max-width: 400px;">
+                <input type="hidden" name="from" value="fonetik">
+                <div class="input-group">
+                    <input type="text" name="mq" class="form-control" placeholder="Cari merek..." value="{{ merek_query }}">
+                    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                                <thead class="thead-custom">
+                    <tr>
+                        <th class="ps-4">Nama Merek</th>
+                        <th>Admin</th>
+                        <th>Tanggal Ditambahkan</th>
+                        <th class="pe-4">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for merek in merek_list %}
+                    <tr id="merek-row-{{ merek.id }}">
+                        <td class="ps-4" id="merek-nama-{{ merek.id }}">{{ merek.nama_merek }}</td>
+                        <td class="text-muted">{{ merek.uploaded_by.username|default:"-" }}</td>
+                        <td class="text-muted">{{ merek.created_at|date:"d M Y H:i" }}</td>
+                        <td class="pe-4 text-end">
+                            <button class="btn btn-sm btn-outline-primary me-1"
+                                    onclick="openEditMerek({{ merek.id }}, '{{ merek.nama_merek }}')"
+                                    aria-label="Edit merek {{ merek.nama_merek }}">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger"
+                                    onclick="deleteMerek({{ merek.id }}, '{{ merek.nama_merek }}')"
+                                    aria-label="Hapus merek {{ merek.nama_merek }}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="4" class="text-center py-4 text-muted">Tidak ada merek ditemukan.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
-</div>
 
-<script>
-function openEditMerek(id, nama) {
-    document.getElementById('editMerekId').value = id;
-    document.getElementById('editMerekInput').value = nama;
-    document.getElementById('editModal').style.display = 'flex';
-}
-function closeEditMerek() {
-    document.getElementById('editModal').style.display = 'none';
-}
-async function submitEditMerek() {
-    const id = document.getElementById('editMerekId').value;
-    const namaBaru = document.getElementById('editMerekInput').value.trim();
-    const fd = new FormData();
-    fd.append('nama_merek', namaBaru);
-    const res = await fetch(`/merek/edit/${id}/`, {
-        method: 'POST',
-        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
-        body: fd
-    });
-    const data = await res.json();
-    if (data.status === 'ok') {
-        document.querySelector(`#merek-row-${id} td:first-child`).textContent = data.nama_baru;
-        closeEditMerek();
-    } else {
-        alert(data.message);
-    }
-}
-async function deleteMerek(id, nama) {
-    if (!confirm(`Apakah Anda yakin ingin menghapus merek "${nama}"? Tindakan ini tidak dapat dibatalkan.`)) return;
-    const res = await fetch(`/merek/delete/${id}/`, {
-        method: 'POST',
-        headers: { 'X-CSRFToken': '{{ csrf_token }}' }
-    });
-    const data = await res.json();
-    if (data.status === 'ok') {
-        document.getElementById('merek-row-' + id).remove();
-    } else {
-        alert(data.message);
-    }
-}
-</script>
+    <div id="editModal" style="display:none; position:fixed; inset:0; z-index:99999;
+        background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+        <div style="background:white; border-radius:12px; padding:28px; width:360px;">
+            <h6 class="fw-bold mb-3">Edit Nama Merek</h6>
+            <input type="text" id="editMerekInput" class="form-control mb-3">
+            <input type="hidden" id="editMerekId">
+            <div class="d-flex gap-2 justify-content-end">
+                <button class="btn btn-secondary btn-sm" onclick="closeEditMerek()">Batal</button>
+                <button class="btn btn-primary btn-sm" onclick="submitEditMerek()">Simpan</button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
-{% endif %}
+    {% if from_page == 'logo' %}
+    <div class="log-card shadow-sm mb-4" id="kelola-logo">
+        <div class="p-4 pb-0">
+            <h5 class="fw-bold text-dark mb-3">Kelola Logo Terdaftar</h5>
+            <form method="GET" action="{% url 'database_log' %}#kelola-logo" class="mb-3" style="max-width: 400px;">
+                <input type="hidden" name="from" value="logo">
+                <div class="input-group">
+                    <input type="text" name="mq" class="form-control" placeholder="Cari nama merek..." value="{{ merek_query }}">
+                    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                                <thead class="thead-custom">
+                    <tr>
+                        <th class="ps-4" style="width:70px;">Logo</th>
+                        <th>Nama Merek</th>
+                        <th>Admin</th>
+                        <th>Tanggal Ditambahkan</th>
+                        <th class="pe-4">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="logo-tbody">
+                    {% for logo in logos_list %}
+                    <tr id="logo-row-{{ logo.id }}">
+                        <td class="ps-4">
+                            {% if logo.logo_file %}
+                            <img id="logo-img-{{ logo.id }}" src="{{ logo.logo_file.url }}" style="width:44px;height:44px;object-fit:contain;border-radius:6px;background:#f8f9fa;">
+                            {% endif %}
+                        </td>
+                        <td id="logo-nama-{{ logo.id }}" class="fw-bold">{{ logo.nama_merek }}</td>
+                        <td class="text-muted">{{ logo.uploaded_by.username|default:"-" }}</td>
+                        <td class="text-muted">{{ logo.created_at|date:"d M Y H:i" }}</td>
+                        <td class="pe-4 text-end">
+                            <button class="btn btn-sm btn-outline-primary me-1"
+                                    onclick="openEditLogo({{ logo.id }}, '{{ logo.nama_merek }}')"
+                                    aria-label="Edit logo {{ logo.nama_merek }}">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger"
+                                    onclick="deleteLogo({{ logo.id }}, '{{ logo.nama_merek }}')"
+                                    aria-label="Hapus logo {{ logo.nama_merek }}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center py-4 text-muted">Tidak ada logo ditemukan.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="editLogoModal" style="display:none; position:fixed; inset:0; z-index:99999;
+        background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+        <div style="background:white; border-radius:12px; padding:28px; width:360px;">
+            <h6 class="fw-bold mb-3">Edit Logo</h6>
+            <label class="form-label small fw-bold">Nama Merek</label>
+            <input type="text" id="editLogoInput" class="form-control mb-3">
+            <label class="form-label small fw-bold">Ganti Gambar Logo</label>
+            <input type="file" id="editLogoFile" class="form-control mb-3" accept=".png,.jpg,.jpeg,.gif,.webp">
+            <input type="hidden" id="editLogoId">
+            <div class="d-flex gap-2 justify-content-end">
+                <button class="btn btn-secondary btn-sm" onclick="closeEditLogo()">Batal</button>
+                <button class="btn btn-primary btn-sm" onclick="submitEditLogo()">Simpan</button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <div class="log-card shadow-sm">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
@@ -195,7 +230,7 @@ async function deleteMerek(id, nama) {
                         <th class="pe-4">CATATAN</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="log-tbody">
                     {% for log in logs %}
                     <tr>
                         <td class="ps-4 fw-bold text-secondary">
@@ -212,6 +247,8 @@ async function deleteMerek(id, nama) {
                         <td>
                             {% if log.status == 'success' %}
                                 <span class="badge bg-success-subtle text-success badge-status">SUCCESS</span>
+                            {% elif log.status == 'warning' %}
+                                <span class="badge bg-warning-subtle text-warning badge-status">WARNING</span>
                             {% else %}
                                 <span class="badge bg-danger-subtle text-danger badge-status">FAILED</span>
                             {% endif %}
@@ -235,4 +272,139 @@ async function deleteMerek(id, nama) {
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block extra_script %}
+<script>
+// ★ Helper — tambah baris baru ke tabel log tanpa reload halaman
+function tambahBarisLog(data) {
+    const tbody = document.getElementById('log-tbody');
+    if (!tbody) return;
+
+    // Hapus baris "Belum ada riwayat aktivitas" kalau masih ada
+    const emptyRow = tbody.querySelector('td[colspan="5"]');
+    if (emptyRow) emptyRow.closest('tr').remove();
+
+    const newRow = document.createElement('tr');
+    const statusBadge = data.log_status === 'warning'
+        ? '<span class="badge bg-warning-subtle text-warning badge-status">WARNING</span>'
+        : '<span class="badge bg-success-subtle text-success badge-status">SUCCESS</span>';
+    newRow.innerHTML = `
+        <td class="ps-4 fw-bold text-secondary">
+            ${data.log_time}<br>
+            <small class="fw-normal text-muted">${data.log_time_detail}</small>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+                <i class="bi bi-person-circle me-2 text-primary"></i>
+                ${data.log_admin}
+            </div>
+        </td>
+        <td><code class="text-dark">${data.log_filename}</code></td>
+        <td>${statusBadge}</td>
+        <td class="pe-4"><small class="text-muted">${data.log_notes}</small></td>
+    `;
+    tbody.prepend(newRow);
+
+    // Update angka "Total Aktivitas Log" di stats card
+    const totalLogEl = document.querySelector('.bg-custom-green .stats-value');
+    if (totalLogEl) totalLogEl.textContent = parseInt(totalLogEl.textContent || '0') + 1;
+}
+
+// ===== MEREK =====
+function openEditMerek(id, nama) {
+    document.getElementById('editMerekId').value = id;
+    document.getElementById('editMerekInput').value = nama;
+    document.getElementById('editModal').style.display = 'flex';
+}
+function closeEditMerek() {
+    document.getElementById('editModal').style.display = 'none';
+}
+async function submitEditMerek() {
+    const id = document.getElementById('editMerekId').value;
+    const namaBaru = document.getElementById('editMerekInput').value.trim();
+    const fd = new FormData();
+    fd.append('nama_merek', namaBaru);
+    const res = await fetch(`/merek/edit/${id}/`, {
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        body: fd
+    });
+    const data = await res.json();
+    if (data.status === 'ok') {
+        document.getElementById('merek-nama-' + id).textContent = data.nama_baru;
+        closeEditMerek();
+        if (data.log_time) tambahBarisLog(data);
+    } else {
+        alert(data.message);
+    }
+}
+async function deleteMerek(id, nama) {
+    if (!confirm(`Apakah Anda yakin ingin menghapus merek "${nama}"? Tindakan ini tidak dapat dibatalkan.`)) return;
+    const res = await fetch(`/merek/delete/${id}/`, {
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+    });
+    const data = await res.json();
+    if (data.status === 'ok') {
+        document.getElementById('merek-row-' + id).remove();
+        if (data.log_time) tambahBarisLog(data);
+    } else {
+        alert(data.message);
+    }
+}
+
+// ===== LOGO =====
+function openEditLogo(id, nama) {
+    document.getElementById('editLogoId').value = id;
+    document.getElementById('editLogoInput').value = nama;
+    document.getElementById('editLogoModal').style.display = 'flex';
+}
+function closeEditLogo() {
+    document.getElementById('editLogoModal').style.display = 'none';
+}
+async function submitEditLogo() {
+    const id = document.getElementById('editLogoId').value;
+    const namaBaru = document.getElementById('editLogoInput').value.trim();
+    const fileInput = document.getElementById('editLogoFile');
+    const fd = new FormData();
+    fd.append('nama_merek', namaBaru);
+    if (fileInput.files[0]) {
+        fd.append('logo', fileInput.files[0]);
+    }
+    const res = await fetch(`/logo/edit/${id}/`, {
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        body: fd
+    });
+    const data = await res.json();
+    if (data.status === 'ok') {
+        document.getElementById('logo-nama-' + id).textContent = data.nama_baru;
+        if (data.logo_url) {
+            const imgEl = document.getElementById('logo-img-' + id);
+            if (imgEl) imgEl.src = data.logo_url;
+        }
+        fileInput.value = '';  
+        closeEditLogo();
+        if (data.log_time) tambahBarisLog(data);
+    } else {
+        alert(data.message);
+    }
+}
+async function deleteLogo(id, nama) {
+    if (!confirm(`Apakah Anda yakin ingin menghapus logo "${nama}"? Tindakan ini tidak dapat dibatalkan.`)) return;
+    const res = await fetch(`/logo/delete/${id}/`, {
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+    });
+    const data = await res.json();
+    if (data.status === 'ok') {
+        document.getElementById('logo-row-' + id).remove();
+        if (data.log_time) tambahBarisLog(data);
+    } else {
+        alert(data.message);
+    }
+}
+</script>
 {% endblock %}

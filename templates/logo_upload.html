@@ -38,11 +38,6 @@
     .logo-card img { width:100%; height:80px; object-fit:contain; border-radius:6px; margin-bottom:8px; }
     .logo-name { font-size:0.8rem; font-weight:700; color:#313E5E;
                 white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .btn-del { position:absolute; top:6px; right:6px; width:24px; height:24px;
-            background:#dc3545; color:white; border:none; border-radius:50%;
-            font-size:0.7rem; cursor:pointer; display:flex; align-items:center;
-            justify-content:center; opacity:0; transition:opacity 0.2s; }
-    .logo-card:hover .btn-del { opacity:1; }
 </style>
 {% endblock %}
 
@@ -64,8 +59,11 @@
                 </div>
                 <div class="col-md-5">
                     <label class="form-label">File Logo</label>
-                    <input type="file" name="logo" class="form-control"
-                        accept=".png,.jpg,.jpeg,.gif,.webp" required>
+                    <input type="file" name="logo" id="logoFileInput" class="form-control"
+                        accept=".png,.jpg,.jpeg,.gif,.webp,.TIF,.TIFF">
+                    <div class="text-center text-muted small my-1">— atau —</div>
+                    <input type="url" name="logo_url" id="logoUrlInput" class="form-control"
+                        placeholder="Paste URL gambar di sini...">
                 </div>
                 <div class="col-md-3">
                     <button type="submit" class="btn btn-upload-logo w-100">
@@ -87,9 +85,6 @@
         <div class="logo-grid" id="logoGrid">
             {% for logo in logos %}
             <div class="logo-card" id="card-{{ logo.id }}">
-                <button class="btn-del" onclick="deleteLogo({{ logo.id }},'{{ logo.nama_merek }}')" title="Hapus">
-                    <i class="bi bi-x"></i>
-                </button>
                 {% if logo.logo_file %}
                 <img src="{{ logo.logo_file.url }}" alt="{{ logo.nama_merek }}">
                 {% else %}
@@ -114,6 +109,9 @@
 
 {% block extra_script %}
 <script>
+    const logoFileInput = document.getElementById('logoFileInput');
+    const logoUrlInput  = document.getElementById('logoUrlInput');
+
     document.getElementById('uploadLogoForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const ok  = document.getElementById('upload-ok');
@@ -126,9 +124,16 @@
             const res  = await fetch("{% url 'logo_upload' %}", { method:'POST', body: new FormData(this) });
             const data = await res.json();
             if (res.ok && data.status === 'ok') {
-                ok.textContent = data.message; ok.style.display = 'block';
+                if (data.duplicate_warning) {
+                    ok.className = 'alert alert-warning mt-3';
+                    ok.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-2"></i>${data.duplicate_warning}`;
+                } else {
+                    ok.className = 'alert alert-success mt-3';
+                    ok.textContent = data.message;
+                }
+                ok.style.display = 'block';
                 this.reset();
-                setTimeout(() => location.reload(), 1500);
+                setTimeout(() => location.reload(), 2500);
             } else {
                 err.textContent = data.message || 'Terjadi kesalahan.'; err.style.display = 'block';
                 btn.disabled = false; btn.innerHTML = '<i class="bi bi-cloud-arrow-up me-2"></i>Upload';
@@ -139,14 +144,27 @@
         }
     });
 
-    async function deleteLogo(id, nama) {
-        if (!confirm(`Hapus logo "${nama}"?`)) return;
-        const res  = await fetch(`/logo/delete/${id}/`, {
-            method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'}
-        });
-        const data = await res.json();
-        if (data.status === 'ok') document.getElementById('card-' + id).remove();
-        else alert(data.message);
-    }
+    document.addEventListener('paste', function(e) {
+        const items = e.clipboardData?.items;
+        if (!items) return;
+
+        for (const item of items) {
+            if (item.type.indexOf('image') !== -1) {
+                e.preventDefault();
+                const file = item.getAsFile();
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                logoFileInput.files = dt.files;
+                logoUrlInput.value  = '';
+                return;
+            }
+        }
+
+        const pastedText = e.clipboardData?.getData('text')?.trim();
+        if (pastedText && /^https?:\/\/.+\.(png|jpe?g|gif|webp|tiff?)/i.test(pastedText)) {
+            logoUrlInput.value = pastedText;
+            logoFileInput.value = '';
+        }
+    });
 </script>
 {% endblock %}

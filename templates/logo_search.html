@@ -159,6 +159,12 @@
                     style="display:none;">
             </div>
 
+            <div class="text-center my-2">
+                <span class="text-muted small">— atau paste URL gambar —</span>
+                <input type="url" id="logoUrlInput" name="logo_url" class="form-control mx-auto mt-2"
+                    style="max-width:400px;" placeholder="https://...">
+            </div>
+
             {% if error %}
             <div class="alert alert-danger mx-4 mt-3 mb-0">
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}
@@ -249,6 +255,7 @@
 {% block extra_script %}
 <script>
     const logoInput       = document.getElementById('logoInput');
+    const logoUrlInput    = document.getElementById('logoUrlInput');
     const searchBtn       = document.getElementById('searchBtn');
     const dropZone        = document.getElementById('dropZone');
     const previewWrap     = document.getElementById('preview-wrap');
@@ -269,13 +276,31 @@
         reader.readAsDataURL(file);
     }
 
+    function showPreviewUrl(url) {
+        previewImg.src                = url;
+        previewName.textContent       = 'Logo dari URL';
+        dropPlaceholder.style.display = 'none';
+        previewWrap.style.display     = 'block';
+        searchBtn.disabled            = false;
+    }
+
     function showZoom(url, nama) {
-    document.getElementById('zoomImg').src = url;
-    document.getElementById('zoomModal').style.display = 'flex';
+        document.getElementById('zoomImg').src = url;
+        document.getElementById('zoomModal').style.display = 'flex';
     }
 
     logoInput.addEventListener('change', function() {
-        if (this.files && this.files[0]) showPreview(this.files[0]);
+        if (this.files && this.files[0]) {
+            logoUrlInput.value = '';
+            showPreview(this.files[0]);
+        }
+    });
+
+    logoUrlInput.addEventListener('input', function() {
+        if (this.value.trim()) {
+            logoInput.value = '';
+            showPreviewUrl(this.value.trim());
+        }
     });
 
     dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('dragover'); });
@@ -286,6 +311,31 @@
         if (file) {
             const dt = new DataTransfer(); dt.items.add(file);
             logoInput.files = dt.files; showPreview(file);
+        }
+    });
+
+    document.addEventListener('paste', function(e) {
+        const items = e.clipboardData?.items;
+        if (!items) return;
+
+        for (const item of items) {
+            if (item.type.indexOf('image') !== -1) {
+                e.preventDefault();
+                const file = item.getAsFile();
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                logoInput.files = dt.files;
+                logoUrlInput.value = '';
+                showPreview(file);
+                return;
+            }
+        }
+
+        const pastedText = e.clipboardData?.getData('text')?.trim();
+        if (pastedText && /^https?:\/\/.+\.(png|jpe?g|gif|webp|tiff?)/i.test(pastedText)) {
+            logoUrlInput.value = pastedText;
+            logoInput.value = '';
+            showPreviewUrl(pastedText);
         }
     });
 

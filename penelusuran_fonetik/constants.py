@@ -21,8 +21,9 @@ LOGO_SIM_THRESHOLD = 0.75
 # ================================================================
 # Belum di-import di manapun — cadangan kalo nanti migrasi opsi B
 # ================================================================
-FONETIK_SIMILARITY_THRESHOLD = 0.75
+FONETIK_SIMILARITY_THRESHOLD = 0.58
 FONETIK_PENALTI_PER_HURUF = 0.10
+DUPLICATE_LOGO_THRESHOLD = 0.90
 
 PHONETIC_REPLACEMENTS = {
     "DJ": "J", "TJ": "C", "OE": "U", "Y": "I",
@@ -38,5 +39,5 @@ MAGIC_SIGNATURES = [
 RATE_LIMIT_LOGO_SEARCH_MAX = 10
 RATE_LIMIT_LOGO_SEARCH_WINDOW_SECONDS = 60
 CACHE_KEY_PREFIX_RATE_LIMIT = 'ratelimit_logo_'
-
+MAX_URL_IMAGE_MB = 5
 TMP_FILE_MAX_AGE_SECONDS = 3600

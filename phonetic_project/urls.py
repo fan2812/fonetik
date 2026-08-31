@@ -21,4 +21,5 @@ urlpatterns = [
     path('api/v1/', include('penelusuran_fonetik.api_urls', namespace='api')),
     path('merek/delete/<int:merek_id>/', views.merek_delete_view, name='merek_delete'),
     path('merek/edit/<int:merek_id>/', views.merek_edit_view, name='merek_edit'),
+    path('logo/edit/<int:logo_id>/', views.logo_edit_view, name='logo_edit'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

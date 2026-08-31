@@ -4,13 +4,12 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 # Flag global untuk nonaktifkan signal saat upload massal
-# Diset True oleh views.py/management command sebelum loop, lalu False lagi sesudahnya
 _disable_signals = False
 
 
 # --- MODEL 1: LOG PERUBAHAN ---
 class DatabaseChangeLog(models.Model):
-    admin_user  = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    admin_user  = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     timestamp   = models.DateTimeField(auto_now_add=True)
     filename    = models.CharField(max_length=255)
     fileformat  = models.CharField(max_length=10, default='unknown')
@@ -20,8 +19,8 @@ class DatabaseChangeLog(models.Model):
     notes       = models.TextField(blank=True, default='')
 
     class Meta:
-        ordering        = ['-timestamp']
-        verbose_name    = "Database Change Log"
+        ordering            = ['-timestamp']
+        verbose_name        = "Database Change Log"
         verbose_name_plural = "Database Change Logs"
 
     def __str__(self):
@@ -35,8 +34,9 @@ class DatabaseChangeLog(models.Model):
 
 # --- MODEL 2: DATA MEREK ---
 class DataMerek(models.Model):
-    nama_merek = models.CharField(max_length=255, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    nama_merek  = models.CharField(max_length=255, unique=True)
+    created_at  = models.DateTimeField(auto_now_add=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='merek_ditambahkan')
 
     class Meta:
         verbose_name        = "Data Merek"
@@ -48,11 +48,12 @@ class DataMerek(models.Model):
 
 # --- MODEL 3: LOGO DATABASE ---
 class LogoDatabaseEntry(models.Model):
-    nama_merek = models.CharField(max_length=255, verbose_name="Nama Merek")
-    logo_file  = models.ImageField(upload_to='logos/', verbose_name="File Logo")
-    embedding  = models.TextField(verbose_name="Embedding (JSON)", blank=True, default='[]')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    nama_merek  = models.CharField(max_length=255, verbose_name="Nama Merek")
+    logo_file   = models.ImageField(upload_to='logos/', verbose_name="File Logo")
+    embedding   = models.TextField(verbose_name="Embedding (JSON)", blank=True, default='[]')
+    created_at  = models.DateTimeField(auto_now_add=True)
+    updated_at  = models.DateTimeField(auto_now=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='logo_ditambahkan')
 
     class Meta:
         ordering            = ['nama_merek']
@@ -67,24 +68,33 @@ class LogoDatabaseEntry(models.Model):
 
 
 # --- SIGNALS ---
-# Hanya aktif untuk operasi manual (Django Admin, shell)
-# Dinonaktifkan saat upload massal dari web/command supaya tidak dobel
-
 @receiver(post_save, sender=DataMerek)
 def log_merek_save(sender, instance, created, **kwargs):
-    pass
+    if _disable_signals:
+        return
+
+    if created:
+        current_count = DataMerek.objects.count()
+        DatabaseChangeLog.objects.create(
+            admin_user  = instance.uploaded_by,
+            filename    = "Django Admin / System",
+            fileformat  = "MySQL",
+            rows_before = current_count - 1,
+            rows_after  = current_count,
+            status      = "success",
+            notes       = f"Otomatis: Tambah merek '{instance.nama_merek}'"
+        )
 
 
 @receiver(post_delete, sender=DataMerek)
 def log_merek_delete(sender, instance, **kwargs):
-    # Skip kalau flag aktif
     if _disable_signals:
         return
 
     current_count = DataMerek.objects.count()
     DatabaseChangeLog.objects.create(
         admin_user  = None,
-        filename    = "Django Admin",
+        filename    = "Django Admin / System",
         fileformat  = "MySQL",
         rows_before = current_count + 1,
         rows_after  = current_count,
