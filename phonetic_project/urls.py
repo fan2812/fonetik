@@ -22,4 +22,5 @@ urlpatterns = [
     path('merek/delete/<int:merek_id>/', views.merek_delete_view, name='merek_delete'),
     path('merek/edit/<int:merek_id>/', views.merek_edit_view, name='merek_edit'),
     path('logo/edit/<int:logo_id>/', views.logo_edit_view, name='logo_edit'),
+    path('logo/autocomplete/', views.merek_autocomplete_view, name='merek_autocomplete'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

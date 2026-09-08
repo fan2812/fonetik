@@ -45,7 +45,7 @@
 
     .upload-card {
         background: white; border-radius: 12px; border: 1px solid #eee;
-        overflow: hidden; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        overflow: visible; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .upload-zone {
         border: 2px dashed #ced4da; border-radius: 8px; padding: 20px;
@@ -54,6 +54,15 @@
     }
     .upload-zone:hover,
     .upload-zone.dragover { background: #f1f3f5; border-color: #313E5E; }
+    .upload-zone .or-divider {
+        display: flex; align-items: center; gap: 10px; margin: 14px 0 4px 0;
+        color: #adb5bd; font-size: 0.72rem; text-transform: uppercase; font-weight: 700;
+    }
+    .upload-zone .or-divider::before,
+    .upload-zone .or-divider::after { content: ''; flex: 1; height: 1px; background: #e9ecef; }
+    .upload-zone input[type="url"] {
+        cursor: text;
+    }
 
     .btn-cari {
         background-color: #313E5E; color: white !important; font-weight: 700;
@@ -136,8 +145,8 @@
                 onclick="document.getElementById('logoInput').click()">
 
                 <div id="drop-placeholder" {% if query_logo %}style="display:none;"{% endif %}>
-                    <i class="bi bi-image" style="font-size:32px; color:#313E5E;"></i>
-                    <p class="mb-0 mt-2 fw-bold" style="color:#495057;">Klik atau seret logo ke sini</p>
+                    <i class="bi bi-cloud-arrow-up" style="font-size:32px; color:#313E5E;"></i>
+                    <p class="mb-0 mt-2 fw-bold" style="color:#495057;">Klik, drag &amp; drop, atau paste file/URL</p>
                     <p class="text-muted small mb-0">Format: PNG, JPG, WebP, GIF, TIF</p>
                 </div>
 
@@ -157,12 +166,18 @@
                 <input type="file" id="logoInput" name="logo"
                     accept=".png,.jpg,.jpeg,.gif,.bmp,.webp,.tif,.tiff"
                     style="display:none;">
+                <input type="hidden" id="logoUrlInput" name="logo_url">
             </div>
 
-            <div class="text-center my-2">
-                <span class="text-muted small">— atau paste URL gambar —</span>
-                <input type="url" id="logoUrlInput" name="logo_url" class="form-control mx-auto mt-2"
-                    style="max-width:400px;" placeholder="https://...">
+            <div class="mx-auto mt-3 mb-1 position-relative" style="max-width:400px;">
+                <label class="form-label small text-muted mb-1" for="namaMerekInput">
+                    Nama merek <span class="text-muted">(opsional — bantu perketat hasil)</span>
+                </label>
+                <input type="text" id="namaMerekInput" name="nama_merek" class="form-control"
+                    placeholder="Ketik nama merek..." autocomplete="off"
+                    value="{{ nama_merek_qry|default:'' }}">
+                <div id="merekSuggestions" class="list-group position-absolute w-100"
+                    style="z-index:1000; display:none; max-height:200px; overflow-y:auto;"></div>
             </div>
 
             {% if error %}
@@ -336,6 +351,53 @@
             logoUrlInput.value = pastedText;
             logoInput.value = '';
             showPreviewUrl(pastedText);
+        }
+    });
+
+    // --- Autocomplete nama merek (live search, debounced) ---
+    const namaMerekInput = document.getElementById('namaMerekInput');
+    const merekSuggestions = document.getElementById('merekSuggestions');
+    let debounceTimer = null;
+
+    namaMerekInput.addEventListener('input', function() {
+        const q = this.value.trim();
+        clearTimeout(debounceTimer);
+
+        if (q.length < 2) {
+            merekSuggestions.style.display = 'none';
+            merekSuggestions.innerHTML = '';
+            return;
+        }
+
+        debounceTimer = setTimeout(() => {
+            fetch(`{% url 'merek_autocomplete' %}?q=${encodeURIComponent(q)}`)
+                .then(res => res.json())
+                .then(data => {
+                    merekSuggestions.innerHTML = '';
+                    if (!data.results || data.results.length === 0) {
+                        merekSuggestions.style.display = 'none';
+                        return;
+                    }
+                    data.results.forEach(nama => {
+                        const item = document.createElement('button');
+                        item.type = 'button';
+                        item.className = 'list-group-item list-group-item-action';
+                        item.textContent = nama;
+                        item.addEventListener('click', () => {
+                            namaMerekInput.value = nama;
+                            merekSuggestions.style.display = 'none';
+                        });
+                        merekSuggestions.appendChild(item);
+                    });
+                    merekSuggestions.style.display = 'block';
+                })
+                .catch(() => { merekSuggestions.style.display = 'none'; });
+        }, 300); // debounce 300ms — jangan nge-GET tiap keystroke
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!namaMerekInput.contains(e.target) && !merekSuggestions.contains(e.target)) {
+            merekSuggestions.style.display = 'none';
         }
     });
 

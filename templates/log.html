@@ -45,6 +45,10 @@
     .thead-custom th { background-color: #f8f9fa; color: #313E5E; font-weight: 700; border-bottom: 2px solid #dee2e6; padding: 15px; }
     .table td { vertical-align: middle; padding: 15px; font-size: 0.9rem; }
     .badge-status { padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 0.75rem; }
+    .edit-logo-dropzone { border:2px dashed #ced4da; border-radius:8px; padding:14px;
+        cursor:pointer; transition:border-color 0.2s, background 0.2s; min-height:80px;
+        display:flex; align-items:center; justify-content:center; }
+    .edit-logo-dropzone.dragover { border-color:#313E5E; background:rgba(49,62,94,0.05); }
 </style>
 {% endblock %}
 
@@ -97,7 +101,7 @@
         </div>
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                                <thead class="thead-custom">
+                <thead class="thead-custom">
                     <tr>
                         <th class="ps-4">Nama Merek</th>
                         <th>Admin</th>
@@ -160,7 +164,7 @@
         </div>
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                                <thead class="thead-custom">
+                <thead class="thead-custom">
                     <tr>
                         <th class="ps-4" style="width:70px;">Logo</th>
                         <th>Nama Merek</th>
@@ -193,9 +197,30 @@
                             </button>
                         </td>
                     </tr>
-                    {% empty %}
-                    <tr><td colspan="5" class="text-center py-4 text-muted">Tidak ada logo ditemukan.</td></tr>
                     {% endfor %}
+                    {% for merek in merek_tanpa_logo %}
+                    <tr>
+                        <td class="ps-4">
+                            <div style="width:44px;height:44px;border-radius:6px;background:#f8f9fa;display:flex;align-items:center;justify-content:center;color:#ced4da;">
+                                <i class="bi bi-image"></i>
+                            </div>
+                        </td>
+                        <td class="fw-bold">
+                            {{ merek.nama_merek }}
+                            <span class="badge bg-warning-subtle text-warning ms-1" style="font-size:0.7rem;">Belum ada logo</span>
+                        </td>
+                        <td class="text-muted">{{ merek.uploaded_by.username|default:"-" }}</td>
+                        <td class="text-muted">{{ merek.created_at|date:"d M Y H:i" }}</td>
+                        <td class="pe-4 text-end">
+                            <a href="{% url 'logo_upload' %}?nama={{ merek.nama_merek|urlencode }}" class="btn btn-sm btn-outline-success">
+                                <i class="bi bi-cloud-arrow-up"></i> Upload Logo
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if not logos_list and not merek_tanpa_logo %}
+                    <tr><td colspan="5" class="text-center py-4 text-muted">Tidak ada logo ditemukan.</td></tr>
+                    {% endif %}
                 </tbody>
             </table>
         </div>
@@ -208,7 +233,21 @@
             <label class="form-label small fw-bold">Nama Merek</label>
             <input type="text" id="editLogoInput" class="form-control mb-3">
             <label class="form-label small fw-bold">Ganti Gambar Logo</label>
-            <input type="file" id="editLogoFile" class="form-control mb-3" accept=".png,.jpg,.jpeg,.gif,.webp">
+            <div id="editLogoDropzone" class="edit-logo-dropzone mb-3">
+                <input type="file" id="editLogoFile" class="d-none" accept=".png,.jpg,.jpeg,.gif,.webp">
+                <input type="hidden" id="editLogoUrl">
+                <div id="editDropzoneContent" class="text-center text-muted small">
+                    <i class="bi bi-cloud-arrow-up-fill" style="font-size:1.3rem;"></i><br>
+                    Klik, drag & drop, atau paste file/URL
+                </div>
+                <div id="editDropzonePreview" style="display:none;" class="text-center">
+                    <img id="editDropzonePreviewImg" src="" style="max-height:50px;max-width:100%;object-fit:contain;">
+                    <div id="editDropzonePreviewName" class="small text-muted mt-1 text-truncate"></div>
+                    <button type="button" id="editDropzoneClear" class="btn btn-sm btn-outline-danger mt-1">
+                        <i class="bi bi-x"></i> Batal ganti
+                    </button>
+                </div>
+            </div>
             <input type="hidden" id="editLogoId">
             <div class="d-flex gap-2 justify-content-end">
                 <button class="btn btn-secondary btn-sm" onclick="closeEditLogo()">Batal</button>
@@ -356,9 +395,98 @@ async function deleteMerek(id, nama) {
 }
 
 // ===== LOGO =====
+const editLogoFile      = document.getElementById('editLogoFile');
+const editLogoUrl       = document.getElementById('editLogoUrl');
+const editDropzone      = document.getElementById('editLogoDropzone');
+const editDropzoneContent = document.getElementById('editDropzoneContent');
+const editDropzonePreview = document.getElementById('editDropzonePreview');
+const editPreviewImg    = document.getElementById('editDropzonePreviewImg');
+const editPreviewName   = document.getElementById('editDropzonePreviewName');
+
+function showEditFilePreview(file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+        editPreviewImg.src = e.target.result;
+        editPreviewName.textContent = file.name;
+        editDropzoneContent.style.display = 'none';
+        editDropzonePreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+function showEditUrlPreview(url) {
+    editPreviewImg.src = url;
+    editPreviewName.textContent = url;
+    editDropzoneContent.style.display = 'none';
+    editDropzonePreview.style.display = 'block';
+}
+
+function clearEditDropzone() {
+    editLogoFile.value = '';
+    editLogoUrl.value  = '';
+    editDropzoneContent.style.display = 'block';
+    editDropzonePreview.style.display = 'none';
+}
+
+editDropzone.addEventListener('click', (e) => {
+    if (e.target.closest('#editDropzoneClear')) return;
+    editLogoFile.click();
+});
+document.getElementById('editDropzoneClear').addEventListener('click', (e) => {
+    e.stopPropagation();
+    clearEditDropzone();
+});
+editLogoFile.addEventListener('change', () => {
+    if (editLogoFile.files[0]) {
+        editLogoUrl.value = '';
+        showEditFilePreview(editLogoFile.files[0]);
+    }
+});
+['dragover', 'dragleave', 'drop'].forEach(evt => {
+    editDropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); });
+});
+editDropzone.addEventListener('dragover', () => editDropzone.classList.add('dragover'));
+editDropzone.addEventListener('dragleave', () => editDropzone.classList.remove('dragover'));
+editDropzone.addEventListener('drop', (e) => {
+    editDropzone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) {
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        editLogoFile.files = dt.files;
+        editLogoUrl.value  = '';
+        showEditFilePreview(file);
+    }
+});
+document.addEventListener('paste', function(e) {
+    if (document.getElementById('editLogoModal').style.display !== 'flex') return;
+    const items = e.clipboardData?.items;
+    if (items) {
+        for (const item of items) {
+            if (item.type.indexOf('image') !== -1) {
+                e.preventDefault();
+                const file = item.getAsFile();
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                editLogoFile.files = dt.files;
+                editLogoUrl.value  = '';
+                showEditFilePreview(file);
+                return;
+            }
+        }
+    }
+    const pastedText = e.clipboardData?.getData('text')?.trim();
+    if (pastedText && /^https?:\/\/.+\.(png|jpe?g|gif|webp|tiff?)/i.test(pastedText)) {
+        editLogoUrl.value  = pastedText;
+        editLogoFile.value = '';
+        showEditUrlPreview(pastedText);
+    }
+});
+
 function openEditLogo(id, nama) {
     document.getElementById('editLogoId').value = id;
     document.getElementById('editLogoInput').value = nama;
+    clearEditDropzone();
     document.getElementById('editLogoModal').style.display = 'flex';
 }
 function closeEditLogo() {
@@ -367,11 +495,12 @@ function closeEditLogo() {
 async function submitEditLogo() {
     const id = document.getElementById('editLogoId').value;
     const namaBaru = document.getElementById('editLogoInput').value.trim();
-    const fileInput = document.getElementById('editLogoFile');
     const fd = new FormData();
     fd.append('nama_merek', namaBaru);
-    if (fileInput.files[0]) {
-        fd.append('logo', fileInput.files[0]);
+    if (editLogoFile.files[0]) {
+        fd.append('logo', editLogoFile.files[0]);
+    } else if (editLogoUrl.value) {
+        fd.append('logo_url', editLogoUrl.value);
     }
     const res = await fetch(`/logo/edit/${id}/`, {
         method: 'POST',
@@ -385,13 +514,13 @@ async function submitEditLogo() {
             const imgEl = document.getElementById('logo-img-' + id);
             if (imgEl) imgEl.src = data.logo_url;
         }
-        fileInput.value = '';  
         closeEditLogo();
         if (data.log_time) tambahBarisLog(data);
     } else {
         alert(data.message);
     }
 }
+
 async function deleteLogo(id, nama) {
     if (!confirm(`Apakah Anda yakin ingin menghapus logo "${nama}"? Tindakan ini tidak dapat dibatalkan.`)) return;
     const res = await fetch(`/logo/delete/${id}/`, {

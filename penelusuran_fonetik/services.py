@@ -4,10 +4,11 @@ import time
 import jellyfish
 
 from django.conf import settings
-from django.core.cache import cache                                    # import cache Django
+from django.core.cache import cache
+from django.db.models import Case, When, Value, IntegerField                                    # import cache Django
 from .models import DataMerek, LogoDatabaseEntry
 from .ml_engine import str_to_embedding, cosine_similarity
-from .constants import ALLOWED_LOGO_EXT, LOGO_SIM_THRESHOLD, MAX_LOGO_SIZE_MB
+from .constants import ALLOWED_LOGO_EXT, LOGO_SIM_THRESHOLD, MAX_LOGO_SIZE_MB, LOGO_NAME_RESCUE_THRESHOLD
 
 def normalize_phonetic(word):
     if not word:
@@ -91,29 +92,95 @@ def validate_image_file(file_bytes, filename):
     return True, ''
 
 
-def cari_logo_mirip(query_emb, cache_key=None):
-    """Logic inti similarity logo. Dipanggil logo_search_view (web) & api_search_logo (API)."""
+def cari_logo_mirip(query_emb, nama_merek_qry='', cache_key=None):
+    """Logic inti similarity logo dan nama merek, karena ada limitasi di mlnya jadi yang ada background juga masih bisa terdeteksi. Dipanggil logo_search_view (web) & api_search_logo (API)."""
     if cache_key:
         cached_result = cache.get(cache_key)
         if cached_result is not None:
             return cached_result
     
+    norm_query = normalize_phonetic(nama_merek_qry) if nama_merek_qry else ''
     results = []
     for entry in LogoDatabaseEntry.objects.exclude(embedding='').exclude(embedding='[]'):
         db_emb = str_to_embedding(entry.embedding)
         if not db_emb:
             continue
         score = cosine_similarity(query_emb, db_emb)
-        if score >= LOGO_SIM_THRESHOLD:
+        lolos_vector = score >= LOGO_SIM_THRESHOLD
+        rescued = False
+        
+        if not lolos_vector and norm_query:
+            norm_db = normalize_phonetic(entry.nama_merek)
+            skor_fonetik = jellyfish.jaro_winkler_similarity(norm_query, norm_db)
+            skor_fonetik = max(0.0, skor_fonetik - jellyfish.levenshtein_distance(norm_query, norm_db) * 0.10)
+            rescued = skor_fonetik >= LOGO_NAME_RESCUE_THRESHOLD
+        
+        if lolos_vector or rescued:
             results.append({
                 'nama_merek': entry.nama_merek,
                 'logo_url':   entry.get_logo_url(),
                 'similarity': round(score * 100, 2),
+                'rescued_by_nama' : rescued,
             })
     results.sort(key=lambda x: x['similarity'], reverse=True)
     if cache_key:
         cache.set(cache_key, results, 300)  # Cache for 5 minutes
     return results
+
+def cari_merek_autocomplete(query, limit=8):
+    """Autocomplete nama merek dari DataMerek, buat dipakai di field live-search.
+    Prioritas: exact match > startswith > contains biasa, baru alfabetis di tiap grup.
+    Tanpa ini, nama yg exact match bisa 'ketutup' banyaknya hasil substring match lain."""
+    query = (query or '').strip()
+    if len(query) < 2:
+        return []
+
+    cache_key = f'merek_autocomplete_{query.lower()}'
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    matches = list(
+        DataMerek.objects
+        .filter(nama_merek__icontains=query)
+        .annotate(priority=Case(
+            When(nama_merek__iexact=query, then=Value(0)),
+            When(nama_merek__istartswith=query, then=Value(1)),
+            default=Value(2),
+            output_field=IntegerField(),
+        ))
+        .order_by('priority', 'nama_merek')
+        .values_list('nama_merek', flat=True)[:limit]
+    )
+    cache.set(cache_key, matches, 300)
+    return matches
+
+
+def filter_by_phonetic(nama_merek_query, vector_hits, min_score=0.75):
+    """
+    Cascade step 2: filter hasil vector similarity (dari cari_logo_mirip)
+    berdasarkan kedekatan fonetik nama merek query vs nama tiap kandidat.
+    Kandidat yang fonetiknya jauh dari nama_merek_query akan didrop,
+    walau skor vector-nya tinggi. Kalau nama_merek_query kosong, cascade
+    di-skip dan vector_hits dikembalikan apa adanya.
+    """
+    nama_merek_query = (nama_merek_query or '').strip()
+    if not nama_merek_query:
+        return vector_hits
+
+    norm_query = normalize_phonetic(nama_merek_query)
+    filtered = []
+    for hit in vector_hits:
+        norm_hit    = normalize_phonetic(hit['nama_merek'])
+        skor_awal   = jellyfish.jaro_winkler_similarity(norm_query, norm_hit)
+        jarak_huruf = jellyfish.levenshtein_distance(norm_query, norm_hit)
+        skor_fonetik = max(0.0, skor_awal - jarak_huruf * 0.10)
+
+        if skor_fonetik >= min_score:
+            hit = {**hit, 'phonetic_score': round(skor_fonetik * 100, 2)}
+            filtered.append(hit)
+    return filtered
+
 
 def cleanup_tmp_files():
     tmp_dir = os.path.join(settings.MEDIA_ROOT, 'tmp')

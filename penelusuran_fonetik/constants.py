@@ -19,9 +19,10 @@ MAX_LOGO_SIZE_MB = 10
 LOGO_SIM_THRESHOLD = 0.75
 
 # ================================================================
-# Belum di-import di manapun — cadangan kalo nanti migrasi opsi B
+# import di services.py (cari_logo_mirip)
 # ================================================================
-FONETIK_SIMILARITY_THRESHOLD = 0.58
+FONETIK_SIMILARITY_THRESHOLD = 0.35
+LOGO_NAME_RESCUE_THRESHOLD = 0.90
 FONETIK_PENALTI_PER_HURUF = 0.10
 DUPLICATE_LOGO_THRESHOLD = 0.90
 

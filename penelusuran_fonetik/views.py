@@ -6,6 +6,8 @@ import pandas as pd
 import openpyxl
 from urllib.parse import urlparse
 
+from . import models as _models
+
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth import logout, login
@@ -22,7 +24,10 @@ from django.utils import timezone
 from .models import DatabaseChangeLog, DataMerek, LogoDatabaseEntry
 from .forms import UploadCSVForm
 from .ml_engine import extract_embedding, embedding_to_str
-from .services import cari_fonetik, validate_image_file, cari_logo_mirip, cleanup_tmp_files
+from .services import (
+    cari_fonetik, validate_image_file, cari_logo_mirip, cleanup_tmp_files,
+    cari_merek_autocomplete,
+)
 from .constants import ALLOWED_CSV_EXT, DUPLICATE_LOGO_THRESHOLD, MAX_CSV_SIZE_MB, CSV_ENCODINGS_TRY
 
 MANUAL_MIN_ROWS = 21   # Di bawah ini wajib manual, bukan file
@@ -48,7 +53,7 @@ def _fetch_image_from_url(url):
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                       '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                        '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
 
     try:
@@ -74,6 +79,7 @@ def _fetch_image_from_url(url):
         filename += '.jpg'
 
     return img_bytes, filename, None
+
 
 # ================================================================
 # 1. PENCARIAN FONETIK (publik)
@@ -110,11 +116,15 @@ def upload_database(request):
             )
 
         rows_before = DataMerek.objects.count()
-        obj, created = DataMerek.objects.get_or_create(
-            nama_merek=nama_merek,
-            defaults={'uploaded_by': request.user}
-        )
-        rows_after   = DataMerek.objects.count()
+        _models._disable_signals = True
+        try:
+            obj, created = DataMerek.objects.get_or_create(
+                nama_merek=nama_merek,
+                defaults={'uploaded_by': request.user}
+            )
+        finally:
+            _models._disable_signals = False
+        rows_after = DataMerek.objects.count()
 
         DatabaseChangeLog.objects.create(
             admin_user  = request.user,
@@ -208,11 +218,15 @@ def upload_database(request):
                 with transaction.atomic():
                     raw_values   = df[target_col].dropna().astype(str)
                     clean_values = {val.strip().upper() for val in raw_values if val.strip()}
-                    for merek_nama in clean_values:
-                        DataMerek.objects.get_or_create(
-                            nama_merek=merek_nama,
-                            defaults={'uploaded_by': request.user}
-                        )
+                    _models._disable_signals = True
+                    try:
+                        for merek_nama in clean_values:
+                            DataMerek.objects.get_or_create(
+                                nama_merek=merek_nama,
+                                defaults={'uploaded_by': request.user}
+                            )
+                    finally:
+                        _models._disable_signals = False
 
             else:  # Excel
                 wb = openpyxl.load_workbook(uploaded_file, read_only=True)
@@ -229,7 +243,7 @@ def upload_database(request):
                         break
 
                 data_rows = list(ws.iter_rows(min_row=2, values_only=True))
-                data_rows = [r for r in data_rows if r[merek_col_idx] if len(r) > merek_col_idx]
+                data_rows = [r for r in data_rows if len(r) > merek_col_idx and r[merek_col_idx]]
 
                 if len(data_rows) < MANUAL_MIN_ROWS:
                     wb.close()
@@ -243,15 +257,19 @@ def upload_database(request):
                     }, status=400)
 
                 with transaction.atomic():
-                    for row in data_rows:
-                        val = row[merek_col_idx]
-                        if val:
-                            nama = str(val).strip().upper()
-                            if nama:
-                                DataMerek.objects.get_or_create(
-                                    nama_merek=nama,
-                                    defaults={'uploaded_by': request.user}
-                                )
+                    _models._disable_signals = True
+                    try:
+                        for row in data_rows:
+                            val = row[merek_col_idx]
+                            if val:
+                                nama = str(val).strip().upper()
+                                if nama:
+                                    DataMerek.objects.get_or_create(
+                                        nama_merek=nama,
+                                        defaults={'uploaded_by': request.user}
+                                    )
+                    finally:
+                        _models._disable_signals = False
                 wb.close()
 
             rows_after  = DataMerek.objects.count()
@@ -295,7 +313,6 @@ def upload_database(request):
 # ================================================================
 # 3. LOG DATABASE (admin)
 # ================================================================
-
 @login_required
 @user_passes_test(is_staff)
 def database_log_view(request):
@@ -305,28 +322,35 @@ def database_log_view(request):
     total_logs   = logs.count()
     from_page    = request.GET.get('from', 'fonetik')
 
-    merek_query = request.GET.get('mq', '').strip()
-    merek_list  = None
-    logos_list  = None
+    merek_query      = request.GET.get('mq', '').strip()
+    merek_list       = None
+    logos_list       = None
+    merek_tanpa_logo = None
 
     if from_page == 'fonetik':
         merek_list = DataMerek.objects.none()
         if merek_query:
             merek_list = DataMerek.objects.filter(nama_merek__icontains=merek_query).order_by('-created_at')[:100]
     elif from_page == 'logo':
-        logos_list = LogoDatabaseEntry.objects.none()
+        logos_list       = LogoDatabaseEntry.objects.none()
+        merek_tanpa_logo = DataMerek.objects.none()
         if merek_query:
             logos_list = LogoDatabaseEntry.objects.filter(nama_merek__icontains=merek_query).order_by('-created_at')[:100]
+            nama_ada_logo = LogoDatabaseEntry.objects.values_list('nama_merek', flat=True)
+            merek_tanpa_logo = DataMerek.objects.filter(
+                nama_merek__icontains=merek_query
+            ).exclude(nama_merek__in=nama_ada_logo).order_by('-created_at')[:100]
 
     context = {
-        'logs':         logs,
-        'total_brands': total_brands,
-        'total_logos':  total_logos,
-        'total_logs':   total_logs,
-        'from_page':    from_page,
-        'merek_query':  merek_query,
-        'merek_list':   merek_list,
-        'logos_list':   logos_list,
+        'logs':             logs,
+        'total_brands':     total_brands,
+        'total_logos':      total_logos,
+        'total_logs':       total_logs,
+        'from_page':        from_page,
+        'merek_query':      merek_query,
+        'merek_list':       merek_list,
+        'logos_list':       logos_list,
+        'merek_tanpa_logo': merek_tanpa_logo,
     }
     return render(request, 'log.html', context)
 
@@ -339,7 +363,13 @@ def merek_delete_view(request, merek_id):
         merek = DataMerek.objects.get(id=merek_id)
         nama = merek.nama_merek
         rows_before = DataMerek.objects.count()
-        merek.delete()
+
+        _models._disable_signals = True
+        try:
+            merek.delete()
+        finally:
+            _models._disable_signals = False
+
         rows_after = DataMerek.objects.count()
 
         DatabaseChangeLog.objects.create(
@@ -383,15 +413,19 @@ def merek_edit_view(request, merek_id):
         if DataMerek.objects.filter(nama_merek=nama_baru).exclude(id=merek_id).exists():
             return JsonResponse({'status': 'error', 'message': f'Merek "{nama_baru}" sudah ada di database.'}, status=400)
 
+        rows_before = DataMerek.objects.count()
+
         merek.nama_merek = nama_baru
         merek.save()
+
+        rows_after = DataMerek.objects.count()
 
         DatabaseChangeLog.objects.create(
             admin_user  = request.user,
             filename    = 'Manual Edit',
             fileformat  = 'manual',
-            rows_before = DataMerek.objects.count(),
-            rows_after  = DataMerek.objects.count(),
+            rows_before = rows_before,
+            rows_after  = rows_after,
             status      = 'success',
             notes       = f'Edit manual: {nama_lama} -> {nama_baru}',
         )
@@ -457,14 +491,16 @@ def staff_check_view(request):
 def logo_search_view(request):
     cleanup_tmp_files()
 
-    results       = []
-    query_logo    = None
-    error         = None
-    total_logo_db = LogoDatabaseEntry.objects.count()
+    results        = []
+    query_logo     = None
+    error          = None
+    nama_merek_qry = ''
+    total_logo_db  = LogoDatabaseEntry.objects.count()
 
     if request.method == 'POST':
-        uploaded = request.FILES.get('logo')
-        logo_url = request.POST.get('logo_url', '').strip()
+        uploaded       = request.FILES.get('logo')
+        logo_url       = request.POST.get('logo_url', '').strip()
+        nama_merek_qry = request.POST.get('nama_merek', '').strip()
 
         if not uploaded and not logo_url:
             error = 'Tidak ada file atau URL yang diberikan.'
@@ -488,9 +524,11 @@ def logo_search_view(request):
                         saved      = default_storage.save(tmp_path, ContentFile(img_bytes))
                         query_logo = default_storage.url(saved)
 
-                        cache_key = f'logo_search_{hashlib.md5(img_bytes).hexdigest()}'
-                        query_emb = extract_embedding(img_bytes)
-                        results   = cari_logo_mirip(query_emb, cache_key=cache_key)
+                        cache_key   = f'logo_search_{hashlib.md5(img_bytes).hexdigest()}_{nama_merek_qry.lower()}'
+                        query_emb   = extract_embedding(img_bytes)
+                        
+                        # Langsung panggil cari_logo_mirip dengan menyertakan nama_merek_qry dan cache_key
+                        results = cari_logo_mirip(query_emb, nama_merek_qry, cache_key=cache_key)
 
                     except Exception:
                         error = 'Gagal memproses gambar. Coba lagi atau gunakan format lain.'
@@ -501,8 +539,15 @@ def logo_search_view(request):
         'total_logo_db':       total_logo_db,
         'kemiripan_ditemukan': len(results),
         'error':               error,
+        'nama_merek_qry':      nama_merek_qry,
     }
     return render(request, 'logo_search.html', context)
+
+
+def merek_autocomplete_view(request):
+    """Endpoint live-search buat field nama merek di logo_search.html."""
+    query = request.GET.get('q', '')
+    return JsonResponse({'results': cari_merek_autocomplete(query)})
 
 
 @login_required
@@ -521,7 +566,6 @@ def logo_upload_view(request):
 
         nama_merek_upper = nama_merek.upper()
 
-        # ★ TOLAK — kalau merek ini sudah punya logo terdaftar
         if LogoDatabaseEntry.objects.filter(nama_merek=nama_merek_upper).exists():
             return JsonResponse({
                 'status': 'error',
@@ -529,7 +573,6 @@ def logo_upload_view(request):
                             f'Gunakan fitur Edit di halaman Log Database untuk mengganti logo yang sudah ada.'
             }, status=400)
 
-        # ── ambil bytes gambar, dari file atau URL ──
         if logo_file:
             img_bytes   = logo_file.read()
             source_name = logo_file.name
@@ -547,11 +590,9 @@ def logo_upload_view(request):
         try:
             emb = extract_embedding(img_bytes)
 
-            # Cek duplikat logo sebelum menyimpan (logo mirip dari merek LAIN)
             kemungkinan_duplikat = cari_logo_mirip(emb)
             duplikat_ketat = [d for d in kemungkinan_duplikat if d['similarity'] >= DUPLICATE_LOGO_THRESHOLD * 100]
 
-            # ★ TOLAK juga kalau ada logo merek lain yang similarity-nya sangat tinggi (hampir identik)
             if duplikat_ketat:
                 daftar_mirip = ', '.join(f"{d['nama_merek']} ({d['similarity']}%)" for d in duplikat_ketat)
                 return JsonResponse({
@@ -566,7 +607,14 @@ def logo_upload_view(request):
             entry.uploaded_by = request.user
             entry.logo_file.save(source_name, ContentFile(img_bytes), save=True)
 
-            merek_obj, merek_created = DataMerek.objects.get_or_create(nama_merek=nama_merek_upper)
+            _models._disable_signals = True
+            try:
+                merek_obj, merek_created = DataMerek.objects.get_or_create(
+                    nama_merek=nama_merek_upper,
+                    defaults={'uploaded_by': request.user}
+                )
+            finally:
+                _models._disable_signals = False
 
             notes = f'Upload logo: {nama_merek_upper}'
             if merek_created:
@@ -644,16 +692,26 @@ def logo_edit_view(request, logo_id):
         nama_lama = entry.nama_merek
         nama_baru = request.POST.get('nama_merek', '').strip().upper()
         new_file = request.FILES.get('logo')
+        logo_url = request.POST.get('logo_url', '').strip()
 
         if not nama_baru:
             return JsonResponse({'status': 'error', 'message': 'Nama merek tidak boleh kosong.'}, status=400)
 
         ada_perubahan = False
-        duplikat_ketat = []   
+        duplikat_ketat = []
+        img_bytes = None 
+        new_filename = None
 
         if new_file:
             img_bytes = new_file.read()
-            valid, err_msg = validate_image_file(img_bytes, new_file.name)
+            new_filename = new_file.name
+        elif logo_url:
+            img_bytes, new_filename, fetch_err = _fetch_image_from_url(logo_url)
+            if fetch_err:
+                return JsonResponse({'status': 'error', 'message': fetch_err}, status=400)
+            
+        if img_bytes:
+            valid, err_msg = validate_image_file(img_bytes, new_filename)
             if not valid:
                 return JsonResponse({'status': 'error', 'message': err_msg}, status=400)
 
@@ -670,7 +728,7 @@ def logo_edit_view(request, logo_id):
 
             if entry.logo_file:
                 default_storage.delete(entry.logo_file.name)
-            entry.logo_file.save(new_file.name, ContentFile(img_bytes), save=False)
+            entry.logo_file.save(new_filename, ContentFile(img_bytes), save=False)
 
             entry.embedding = embedding_to_str(emb)
             ada_perubahan = True
@@ -687,8 +745,8 @@ def logo_edit_view(request, logo_id):
         entry.save()
 
         notes = f'Edit logo: {nama_lama} -> {nama_baru}' if nama_lama != nama_baru else f'Edit gambar logo: {nama_lama}'
-        if new_file:
-            notes += ' (gambar diperbarui)'
+        if img_bytes:
+            notes += ' (gambar diperbarui via url)' if logo_url else ' (gambar diperbarui via upload)'
 
         DatabaseChangeLog.objects.create(
             admin_user  = request.user,

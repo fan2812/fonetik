@@ -1,19 +1,5 @@
-"""
-FILE BARU: penelusuran_fonetik/management/commands/regenerate_embeddings.py
-
-Regenerate embedding SEMUA logo di LogoDatabaseEntry menggunakan
-pipeline ml_engine.py yang sekarang (preprocessing grayscale).
-
-WAJIB dijalankan setelah ml_engine.py diubah (grayscale preprocessing),
-karena embedding lama dihitung dengan pipeline RGB penuh -- gak
-comparable lagi sama query baru.
-
-Cara pakai:
-    python manage.py regenerate_embeddings
-    python manage.py regenerate_embeddings --dry-run   # cek dulu tanpa nyimpen
-"""
 from django.core.management.base import BaseCommand
-from django.db import transaction
+from django.utils import timezone
 from penelusuran_fonetik.models import LogoDatabaseEntry
 from penelusuran_fonetik.ml_engine import extract_embedding, embedding_to_str
 
@@ -46,23 +32,23 @@ class Command(BaseCommand):
                     failed.append((entry.nama_merek, 'file logo tidak ada'))
                     continue
 
-                # baca ulang file gambar dari storage
-                entry.logo_file.open('rb')
-                img_bytes = entry.logo_file.read()
-                entry.logo_file.close()
+                # Baca file gambar dengan aman
+                with entry.logo_file.open('rb') as f:
+                    img_bytes = f.read()
 
                 new_emb = extract_embedding(img_bytes)
 
                 if not dry_run:
                     entry.embedding = embedding_to_str(new_emb)
-                    entry.save(update_fields=['embedding'])
+                    entry.updated_at = timezone.now()
+                    entry.save(update_fields=['embedding', 'updated_at'])
 
                 success_count += 1
 
             except Exception as e:
                 failed.append((entry.nama_merek, str(e)))
 
-            # progress tiap 50 logo
+            # Progress tiap 50 logo
             if idx % 50 == 0 or idx == total:
                 self.stdout.write(f'  [{idx}/{total}] diproses...')
 
