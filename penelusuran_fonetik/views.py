@@ -492,6 +492,8 @@ def logo_search_view(request):
     cleanup_tmp_files()
 
     results        = []
+    hasil_visual   = []
+    hasil_rescue   = []
     query_logo     = None
     error          = None
     nama_merek_qry = ''
@@ -529,20 +531,23 @@ def logo_search_view(request):
                         
                         # Langsung panggil cari_logo_mirip dengan menyertakan nama_merek_qry dan cache_key
                         results = cari_logo_mirip(query_emb, nama_merek_qry, cache_key=cache_key)
+                        hasil_visual = [r for r in results if not r.get('rescued_by_nama')]
+                        hasil_rescue = [r for r in results if r.get('rescued_by_nama')]
 
                     except Exception:
                         error = 'Gagal memproses gambar. Coba lagi atau gunakan format lain.'
 
-    context = {
-        'results':             results,
+        context = {
+        'hasil_visual':        hasil_visual,
+        'hasil_rescue':        hasil_rescue,
         'query_logo':          query_logo,
         'total_logo_db':       total_logo_db,
         'kemiripan_ditemukan': len(results),
         'error':               error,
         'nama_merek_qry':      nama_merek_qry,
     }
-    return render(request, 'logo_search.html', context)
 
+    return render(request, 'logo_search.html', context)
 
 def merek_autocomplete_view(request):
     """Endpoint live-search buat field nama merek di logo_search.html."""

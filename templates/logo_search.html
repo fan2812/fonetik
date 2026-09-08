@@ -220,9 +220,12 @@
         </div>
     </div>
 
-    {% if results %}
+    {% if hasil_visual or hasil_rescue %}
+
+        {% if hasil_visual %}
+        <h6 class="text-muted mt-2 mb-2">Cocok secara visual</h6>
     <div class="row g-3">
-        {% for item in results %}
+        {% for item in hasil_visual %}
         <div class="col-lg-3 col-md-4 col-sm-6">
             <div class="logo-result-card">
                 <div class="logo-img-wrap">
@@ -247,7 +250,35 @@
         </div>
         {% endfor %}
     </div>
-    {% else %}
+    {% endif %}
+
+    {% if hasil_rescue %}
+    <h6 class="text-muted mt-4 mb-2">Cocok berdasarkan nama merek (visual kurang jelas)</h6>
+    <div class="row g-3">
+        {% for item in hasil_rescue %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="logo-result-card">
+                <div class="logo-img-wrap">
+                    {% if item.logo_url %}
+                    <img src="{{ item.logo_url }}" alt="{{ item.nama_merek }}"
+                    style="cursor:zoom-in;"
+                    onclick="showZoom('{{ item.logo_url }}', '{{ item.nama_merek }}')">
+                    {% else %}
+                    <i class="bi bi-image" style="font-size:40px;color:#dee2e6;"></i>
+                    {% endif %}
+                </div>
+                <div class="logo-card-body">
+                    <div class="logo-card-name" title="{{ item.nama_merek }}">{{ item.nama_merek }}</div><br>
+                    <span class="badge bg-warning text-dark mb-1">Penyelamatan Fonetik</span><br>
+                    <span class="score-badge low-match">{{ item.similarity }}%</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+{% else %}
     <div class="empty-state">
         {% if query_logo %}
             <i class="bi bi-search"></i>
