@@ -1,0 +1,2569 @@
+[
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$HfE8SqriRGrDUSjUS2cvbZ$g8zFM4uhr28LGZ18JAwwsrUufQ4RekF00/5vtmpC//o=",
+    "last_login": "2026-08-24T01:03:09.686Z",
+    "is_superuser": true,
+    "username": "taufanstr",
+    "first_name": "",
+    "last_name": "",
+    "email": "taufan.nirwikara@binus.ac.id",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-28T01:21:08.265Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$Uso5rZw7PyPbwyrWHejS1c$d4AvdZzfpXpvZBdDCtR6RHFfTOfkwja26zsWliSxB8I=",
+    "last_login": "2026-05-02T02:57:26.931Z",
+    "is_superuser": false,
+    "username": "nst1",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-28T01:45:03Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$0HQHd37T1PLYGGCWR6E4ym$ibAVE5FpYQT2AGgAkjLKu6kEmy+k20v8p1jsoGMIOCs=",
+    "last_login": "2026-04-28T02:42:56Z",
+    "is_superuser": false,
+    "username": "nst2",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-28T02:42:56Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$O1rqNacW9Ln2OYjMt6qmMA$+VKDn2OIBN4JNzVl60SOP20HFG9bCEkI7ro7vAzAtIQ=",
+    "last_login": "2026-07-06T03:33:17.182Z",
+    "is_superuser": false,
+    "username": "nst9",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-07-06T03:32:09Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$2ENnkyDxw7faemKestWboo$xFFhGJSuW+a9n2PsY/H4Vzb+fQ7UH88A14Na6/0NsNc=",
+    "last_login": "2026-08-19T03:52:26.554Z",
+    "is_superuser": false,
+    "username": "pai",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-08-12T01:28:39Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$LlL1ebfml8jnyGV1uO9xzb$Xq+xKUcCaE6mXGSLowFMEaTD7hez+3bspoOsvXfPszM=",
+    "last_login": "2026-09-07T01:18:23.908Z",
+    "is_superuser": false,
+    "username": "ista",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-08-24T01:02:32Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "0d7248bujjihhcgt0xvu6vosv5i4pe92",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSEF5FGX7v0GMswMUjWQlHZl_HfbpAvd3nPOfYsI61Li2nmOE4mLcOL0uyXAJ9cd0APqvUlsdZmnJHdFHrTLWyN-XQ_376BAL1ttHZIlxIHPGDQri6CdJjRKG6PBU6JsUYVxMCN7zOytyQ6DGrZIUxafL_7KOLw:1wz2Jw:NxEjFLx8sazUuv-AAD7FCUinKvSwyUZaOCHbrX1Htpw",
+    "expire_date": "2026-08-26T10:20:52.250Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "2v1ox4l1ndoyd2nn9wlon5nwqhzn97k8",
+  "fields": {
+    "session_data": ".eJxVjM0OwiAQhN-FsyHlZwE9evcZyC4LUjU0Ke3J-O62SQ96mmS-b-YtIq5LjWvPcxxZXASI029HmJ657YAf2O6TTFNb5pHkrsiDdnmbOL-uh_t3ULHXbU2eHPqkEUKwTOwNDOdsBheyL8Wh0UVlFYhsgC3BFAZUvpgE1rJO4vMF7f44Dw:1wwXLm:AoDjAXsx4f2mNwzccwn8N3fzm1lw-S1E_oRlASon8Kk",
+    "expire_date": "2026-08-19T12:52:26.559Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "401ep3pouqrpivtq10295ukkwdiq8uuf",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wWPn1:JcOWSfAW2-Jy4hKkLYXeL-AdsRem8-m6kwnrv3Y8VSE",
+    "expire_date": "2026-06-08T11:32:35.771Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "4b091abmtid69377txe8uhmn4i3vgzr2",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSEF5FGX7v0GMswMUjWQlHZl_HfbpAvd3nPOfYsI61Li2nmOE4mLcOL0uyXAJ9cd0APqvUlsdZmnJHdFHrTLWyN-XQ_376BAL1ttHZIlxIHPGDQri6CdJjRKG6PBU6JsUYVxMCN7zOytyQ6DGrZIUxafL_7KOLw:1x1Dpo:qTQJK-AxzuqQip7s3Jc-dqZyPko6vXCi_FGoay79dQ0",
+    "expire_date": "2026-09-01T11:02:48.318Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "61emmmbh7vkqzo5jj96tkib06vqdny14",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hAsHZi6dO8ZyAwMUjU0Ke3KeHfbpAvd_vfef6tA61LC2mQOY1IX1avT78YUn1J3kB5U75OOU13mkfWu6IM2fZuSvK6H-3dQqJWtNjiAs5yzdGi9N-ckznC0A_RsIAMah8RIEYRtRAQbOzR-w54SilWfL884N1o:1wga57:GsB96IDBRm_0N_kFVv7cJV4PdyRfuXzrME5-w6gsH74",
+    "expire_date": "2026-07-06T12:33:17.184Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "7km99m58r7lmuy5bha4xxeg719j5xt5w",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wHcM3:LcXOgBIeNKA9ZK_yQNE4UEBHlz4zNiYwqjtaMAalj2E",
+    "expire_date": "2026-04-28T15:55:35.123Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "7uqc7yf4fo4x8z1ecb263ep1sff4f6dy",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wjXJw:o4ofmnQ1m1kClEdw9t35_wvdSw8QwQ3b4JN-iro0FXE",
+    "expire_date": "2026-07-14T16:12:48.493Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "8gzmfo34e7u5f0udp5tf79sezf3navso",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSEF5FGX7v0GMswMUjWQlHZl_HfbpAvd3nPOfYsI61Li2nmOE4mLcOL0uyXAJ9cd0APqvUlsdZmnJHdFHrTLWyN-XQ_376BAL1ttHZIlxIHPGDQri6CdJjRKG6PBU6JsUYVxMCN7zOytyQ6DGrZIUxafL_7KOLw:1wzPUL:kbibUSRgBWtUudpgVTLp9tvhafnaw9qVeH0DpcwAhdM",
+    "expire_date": "2026-08-27T11:05:09.539Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "9u1az635izd2uyn169ri3hw5y3f7wco2",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1weObV:9oZGktVJJz880U5rCH0xxAe42BDga62_1wfNyGf7zRM",
+    "expire_date": "2026-06-30T11:53:41.777Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "c8xi3tp51jnn3lafacl23hc7y70c06dm",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBgoIBL956BzDBUqoYmpV0Z765NutDtf-_9l0i4rTVtvSxpYnEWRpx-N8L8KG0HfMd2m2We27pMJHdFHrTL68zleTncv4OKvX5rTy5CycRu0EDoRhUi-RyMgdGrTNEGNXBRYD2DCy5qDZYJMmLxxkfx_gDdTDd6:1wIjUp:B6_C3jnf7pJp73UlyYRzM6ASfyjDd0JkJAjORlC1NxQ",
+    "expire_date": "2026-05-01T17:45:15.266Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "cc9vp8rwrp22nllpp9cbvlnkkm8ahuoz",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1woCSh:0R1AAHyLbNscMyyY_39GQjMbpX1g5ofnCjXTgcMgd54",
+    "expire_date": "2026-07-27T12:57:07.915Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "d9uty47jq3jt2y5l81sie8akguqvow5y",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wjssu:MEQu2DEHH-g8eneZu83RiwN0xLc8ewRHFg98KOHm1yw",
+    "expire_date": "2026-07-15T15:14:20.884Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "dbxsnjb6ducfz334vyzis5mhlzpn2dn5",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wpFs5:dkWaJnQOXZ51a1qm2AQhHohXtS9YMq15W0WJHcihpcc",
+    "expire_date": "2026-07-30T10:47:41.278Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "do5mag09ta9yfvdo3k7nea69vwpiilsi",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1weqPE:pmQK1vSz9MCo42xZfd7o8O3dbXRXxCuCl-yA6GS7uZY",
+    "expire_date": "2026-07-01T17:34:52.949Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "fdqr7gt5wszzy7kmdze528xth82psp2s",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wrmpA:60f4QNqGWt5ZDns4mE-3ibRpL6VfTDEez1Bkw_mHn7k",
+    "expire_date": "2026-08-06T10:23:08.379Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "fg5bzgqgdw8e66p8c5zgqxsvqd7cxhpt",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wtc2e:dIG3jzJgPPMDfwHpjOkSbl88OU8ezDpnmErDghtNRQc",
+    "expire_date": "2026-08-11T11:16:36.814Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "fh6anxavdowcf16e0qrm7j82grdlqsei",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBgoIBL956BzDBUqoYmpV0Z765NutDtf-_9l0i4rTVtvSxpYnEWRpx-N8L8KG0HfMd2m2We27pMJHdFHrTL68zleTncv4OKvX5rTy5CycRu0EDoRhUi-RyMgdGrTNEGNXBRYD2DCy5qDZYJMmLxxkfx_gDdTDd6:1wHuqu:fe2TuJQfART5TutMcfymBZ0b-mTPtDZ6M7VTc5j1x_8",
+    "expire_date": "2026-04-29T11:40:40.308Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "hcrr5n9pvmefmjjlzzuaxb9iq23d8kym",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wjpFV:7_D6Ur6A_G5DteVNLIReDJrd3y1PvwSk-v9ItlmsB9U",
+    "expire_date": "2026-07-15T11:21:25.732Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "hvuejh73mbzhjxr0h8z8ugf1p6jwl8i8",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wtF17:QIUJD7F7qK0-CKuajeBJYRD2HiiDJ9e3QO5PRQ6Fn0c",
+    "expire_date": "2026-08-10T10:41:29.286Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ijd5gydbj7jg0ep09znoj3sbc2kt6ms3",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBgoIBL956BzDBUqoYmpV0Z765NutDtf-_9l0i4rTVtvSxpYnEWRpx-N8L8KG0HfMd2m2We27pMJHdFHrTL68zleTncv4OKvX5rTy5CycRu0EDoRhUi-RyMgdGrTNEGNXBRYD2DCy5qDZYJMmLxxkfx_gDdTDd6:1wJ0Xm:-TAqLWxyO2K2NJu5-qVkn_IxU66saksnQbVElzzAU3A",
+    "expire_date": "2026-05-02T11:57:26.936Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "iunscfmhpzo1np0mq4qekhfgcqyj5zxm",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wgdXW:8mnloc6g6xloxkIxBHZOIbzAcPtJAqPAkdew6I_ptHc",
+    "expire_date": "2026-07-06T16:14:50.161Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "jretpa01b4yh3a7idrh8004ulecoqrvr",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSEF5FGX7v0GMswMUjWQlHZl_HfbpAvd3nPOfYsI61Li2nmOE4mLcOL0uyXAJ9cd0APqvUlsdZmnJHdFHrTLWyN-XQ_376BAL1ttHZIlxIHPGDQri6CdJjRKG6PBU6JsUYVxMCN7zOytyQ6DGrZIUxafL_7KOLw:1x20oQ:KZTS6odW0mqg5A4Yo-GBxQEi1URbjJYjjNSqh5rBQ2I",
+    "expire_date": "2026-09-03T15:20:38.276Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "jwm7ogps4i9du6oll7b3k27x812occb3",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wodUI:lDq7yCT9HbdWl9nEP_J87jcUpwPMFiNDq8eNfwNz7Ec",
+    "expire_date": "2026-07-28T17:48:34.590Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "k85gyce89xxx3tdf3l0mij3b7pjss7p1",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wj5LG:LNgZbKDjXyg_yyiRLcAOtTBJle9-jB-JyT7cBbEys3Y",
+    "expire_date": "2026-07-13T10:20:18.463Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ly20zxocczbhr0kjbqz09yp0jerbqo4e",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wfC09:Cgaj16V-AtLuZJLuN8uzKx6SUT6TUySepOduCQykICY",
+    "expire_date": "2026-07-02T16:38:25.170Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "nid3tfkywlwwr29h7u5qd2oqdxbzm3ai",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSEF5FGX7v0GMswMUjWQlHZl_HfbpAvd3nPOfYsI61Li2nmOE4mLcOL0uyXAJ9cd0APqvUlsdZmnJHdFHrTLWyN-XQ_376BAL1ttHZIlxIHPGDQri6CdJjRKG6PBU6JsUYVxMCN7zOytyQ6DGrZIUxafL_7KOLw:1x1a2X:98DLn5bgo8v0WCmVoRCUpN0ZiKlcrXve9B9l9s78BoE",
+    "expire_date": "2026-09-02T10:45:25.099Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "olde7n9fk915oz1imrmueyzphhywqbza",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSEF5FGX7v0GMswMUjWQlHZl_HfbpAvd3nPOfYsI61Li2nmOE4mLcOL0uyXAJ9cd0APqvUlsdZmnJHdFHrTLWyN-XQ_376BAL1ttHZIlxIHPGDQri6CdJjRKG6PBU6JsUYVxMCN7zOytyQ6DGrZIUxafL_7KOLw:1x0qzm:e-qNU61XXRbtVZq3LfRhf1TxLwYWwMkb-Vq5b9FYexA",
+    "expire_date": "2026-08-31T10:39:34.845Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ragfg6elqxygduducmpneg5rjinfvbav",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wlz1z:44tOnf4zCXeEmXpXvjEtYqIlw3MVd4ty8hwAuoVKclo",
+    "expire_date": "2026-07-21T10:12:23.574Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "s9bgexzgw848pu9a569smzujxp9987g0",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wtxrn:sYDHwEVt6EqsqOY4Xu5tVx40pT4Fg5EXLDl6TOmpJkI",
+    "expire_date": "2026-08-12T10:34:51.110Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "sblgvo84ugla9bjhgfn4iy36kj3n9u8z",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wkcDz:hpXV2xeYO6bv8eTmRIwhhCEyFr8dyhbteQoxRnNrmfQ",
+    "expire_date": "2026-07-17T15:39:07.520Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ssq870r1hr8k0ay8ojktiv5yit6m7cbz",
+  "fields": {
+    "session_data": ".eJxVjM0OwiAQhN-FsyHlZwE9evcZyC4LUjU0Ke3J-O62SQ96mmS-b-YtIq5LjWvPcxxZXASI029HmJ657YAf2O6TTFNb5pHkrsiDdnmbOL-uh_t3ULHXbU2eHPqkEUKwTOwNDOdsBheyL8Wh0UVlFYhsgC3BFAZUvpgE1rJO4vMF7f44Dw:1wtxlo:BfGb5hW9SEFLo17H2xomDUorKpylwi4-TLcyUOfUH38",
+    "expire_date": "2026-08-12T10:28:40.022Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "tgw76j0mryrhbs2usoqgve89735pilfv",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBgoIBL956BzDBUqoYmpV0Z765NutDtf-_9l0i4rTVtvSxpYnEWRpx-N8L8KG0HfMd2m2We27pMJHdFHrTL68zleTncv4OKvX5rTy5CycRu0EDoRhUi-RyMgdGrTNEGNXBRYD2DCy5qDZYJMmLxxkfx_gDdTDd6:1wIH3U:9cd7a_Vq9jG2WYTPe5Rb5LuBJQBcL_KqOfB6Qv4jj1Y",
+    "expire_date": "2026-04-30T11:23:08.139Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "tiabdpy8j18ikguql7mmci4ybsmg6w3q",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wwbuX:w2fi9tEZeJspTUv50nJ-y0GatOOqe3ug323fso-1jb8",
+    "expire_date": "2026-08-19T17:44:37.557Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "vaw1kb5v0om2tlc879ug1h3cuwkh5xo8",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wlcL8:YsJ_ew6Y1aFP_j2CFseT5EHT5x2fmqq15S7w8WhWYXo",
+    "expire_date": "2026-07-20T09:58:38.858Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "vo6n0cygmasy5r8a8h5vrka1m7w5ubps",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCg7Qy4dO8ZmhkYpGpKUtqV8e7apAvd_vfef6mRtrWMW5NlnJI6K6tOvxtTfMi8g3Sn-VZ1rPO6TKx3RR-06WtN8rwc7t9BoVa-tc85BEkofYo9sEUP3gVLbDBEdCSEXeaOvfSIkJxlcAEGO7gMRjqj3h_tcDeM:1wou2s:eRSvYbOWe9Tj8935xQ0Gbme2kGoPer7HcMkq0sVLqn4",
+    "expire_date": "2026-07-29T11:29:22.088Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "yct4uitxjwsvf7ckwuufpcfzxz23o6f3",
+  "fields": {
+    "session_data": ".eJxVjM0OwiAQhN-FsyHlZwE9evcZyC4LUjU0Ke3J-O62SQ96mmS-b-YtIq5LjWvPcxxZXASI029HmJ657YAf2O6TTFNb5pHkrsiDdnmbOL-uh_t3ULHXbU2eHPqkEUKwTOwNDOdsBheyL8Wh0UVlFYhsgC3BFAZUvpgE1rJO4vMF7f44Dw:1wuJoB:oSK44MKjAy3RnK52wfi6PaB-ItOuVLhRjPO3HsDLHRs",
+    "expire_date": "2026-08-13T10:00:35.145Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "yrffj3ri01t7k9mnk0yungl5slnkqppv",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSEF5FGX7v0GMswMUjWQlHZl_HfbpAvd3nPOfYsI61Li2nmOE4mLcOL0uyXAJ9cd0APqvUlsdZmnJHdFHrTLWyN-XQ_376BAL1ttHZIlxIHPGDQri6CdJjRKG6PBU6JsUYVxMCN7zOytyQ6DGrZIUxafL_7KOLw:1x3O07:fIvbAXGNHUvdT_LJdRh1b5beyKND5ZTCeQBqQe4A6k4",
+    "expire_date": "2026-09-07T10:18:23.913Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "z76wjh5dqc2nof1nb7r00dv75qniasqs",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSEF5FGX7v0GMswMUjWQlHZl_HfbpAvd3nPOfYsI61Li2nmOE4mLcOL0uyXAJ9cd0APqvUlsdZmnJHdFHrTLWyN-XQ_376BAL1ttHZIlxIHPGDQri6CdJjRKG6PBU6JsUYVxMCN7zOytyQ6DGrZIUxafL_7KOLw:1wyJ6K:JODy1u-M3dtOXLI1nAr60q2WQmr91NPxZZuH_PlMI5A",
+    "expire_date": "2026-08-24T10:03:48.607Z"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46743,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-04-29T06:36:25.284Z",
+    "filename": "merk djki.csv",
+    "fileformat": "csv",
+    "rows_before": 0,
+    "rows_after": 8285,
+    "status": "success",
+    "notes": "Upload berhasil via Terminal. Ditambah 8285 data baru."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46744,
+  "fields": {
+    "admin_user": [
+      "nst1"
+    ],
+    "timestamp": "2026-04-29T06:39:59.270Z",
+    "filename": "testing upload db.xlsx",
+    "fileformat": "xlsx",
+    "rows_before": 8285,
+    "rows_after": 8290,
+    "status": "success",
+    "notes": "Upload berhasil via Web. Ditambah 5 data baru."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46745,
+  "fields": {
+    "admin_user": [
+      "nst1"
+    ],
+    "timestamp": "2026-04-30T03:21:09.944Z",
+    "filename": "merk djki.csv",
+    "fileformat": "csv",
+    "rows_before": 8290,
+    "rows_after": 8290,
+    "status": "success",
+    "notes": "Upload berhasil via Web. Ditambah 0 data baru."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46746,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-03T14:22:17.880Z",
+    "filename": "logos",
+    "fileformat": "7z",
+    "rows_before": 0,
+    "rows_after": 0,
+    "status": "failed",
+    "notes": "[WinError 3] The system cannot find the path specified: 'C:\\\\tmp\\\\tmpl919967t'"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46747,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-03T14:23:17.754Z",
+    "filename": "logos",
+    "fileformat": "7z",
+    "rows_before": 0,
+    "rows_after": 0,
+    "status": "failed",
+    "notes": "[Errno 13] Permission denied: 'media/logos'"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46748,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-03T14:23:44.040Z",
+    "filename": "logos",
+    "fileformat": "7z",
+    "rows_before": 0,
+    "rows_after": 0,
+    "status": "failed",
+    "notes": "[Errno 13] Permission denied: 'C:\\\\Users\\\\taufa\\\\OneDrive - Bina Nusantara\\\\penelusuran_fonetik\\\\media\\\\logos'"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46749,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-03T14:26:20.663Z",
+    "filename": "Gambar.7z",
+    "fileformat": "7z",
+    "rows_before": 0,
+    "rows_after": 0,
+    "status": "partial",
+    "notes": "Import logo via command. Sukses: 0, Gagal: 701, Skip: 0."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46750,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-04T15:16:40.470Z",
+    "filename": "Gambar.7z",
+    "fileformat": "7z",
+    "rows_before": 0,
+    "rows_after": 0,
+    "status": "partial",
+    "notes": "Import logo via command. Sukses: 0, Gagal: 701, Skip: 0."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46751,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-13T01:32:36.659Z",
+    "filename": "Gambar.7z",
+    "fileformat": "7z",
+    "rows_before": 0,
+    "rows_after": 0,
+    "status": "partial",
+    "notes": "Import logo via command. Sukses: 0, Gagal: 701, Skip: 0."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46752,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-13T01:36:06.407Z",
+    "filename": "Gambar.7z",
+    "fileformat": "7z",
+    "rows_before": 0,
+    "rows_after": 0,
+    "status": "partial",
+    "notes": "Import logo via command. Sukses: 0, Gagal: 701, Skip: 0."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46753,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-13T01:37:39.863Z",
+    "filename": "Gambar.7z",
+    "fileformat": "7z",
+    "rows_before": 0,
+    "rows_after": 0,
+    "status": "partial",
+    "notes": "Import logo via command. Sukses: 0, Gagal: 701, Skip: 0."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46754,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-13T01:53:50.775Z",
+    "filename": "Gambar.7z",
+    "fileformat": "7z",
+    "rows_before": 0,
+    "rows_after": 701,
+    "status": "success",
+    "notes": "Import logo via command. Sukses: 701, Gagal: 0, Skip: 0."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46755,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-13T01:55:14.181Z",
+    "filename": "Gambar.7z",
+    "fileformat": "7z",
+    "rows_before": 701,
+    "rows_after": 701,
+    "status": "success",
+    "notes": "Import logo via command. Sukses: 0, Gagal: 0, Skip: 701."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46756,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-13T01:57:09.515Z",
+    "filename": "Gambar.7z",
+    "fileformat": "7z",
+    "rows_before": 701,
+    "rows_after": 701,
+    "status": "success",
+    "notes": "Import logo via command. Sukses: 0, Gagal: 0, Skip: 701."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46757,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-13T02:00:04.533Z",
+    "filename": "Gambar.7z",
+    "fileformat": "7z",
+    "rows_before": 701,
+    "rows_after": 701,
+    "status": "success",
+    "notes": "Import logo via command. Sukses: 0, Gagal: 0, Skip: 701."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46758,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-13T02:10:25.293Z",
+    "filename": "Gambar.7z",
+    "fileformat": "7z",
+    "rows_before": 701,
+    "rows_after": 826,
+    "status": "success",
+    "notes": "Import logo via command. Sukses: 125, Gagal: 0, Skip: 701."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46759,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-05-13T02:57:06.301Z",
+    "filename": "logo_dgip.png",
+    "fileformat": "png",
+    "rows_before": 826,
+    "rows_after": 827,
+    "status": "success",
+    "notes": "Upload logo: DJKI"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46760,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-06-30T02:54:01.409Z",
+    "filename": "negodux-logo-noBg-_TAeDHW8 (1).png",
+    "fileformat": "png",
+    "rows_before": 827,
+    "rows_after": 828,
+    "status": "success",
+    "notes": "Upload logo: NEGODUX"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46761,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-01T06:53:04.198Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8292,
+    "rows_after": 8293,
+    "status": "success",
+    "notes": "Tambah manual: ECENTIO"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46762,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-01T07:06:22.099Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8293,
+    "rows_after": 8293,
+    "status": "success",
+    "notes": "Merek \"ECENTIO\" sudah ada di database."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46763,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-01T08:35:02.336Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8293,
+    "rows_after": 8293,
+    "status": "success",
+    "notes": "Merek \"ACE\" sudah ada di database."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46764,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-01T08:35:27.300Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8293,
+    "rows_after": 8294,
+    "status": "success",
+    "notes": "Tambah manual: ACEHARDWARE"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46765,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-01T08:39:33.028Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8294,
+    "rows_after": 8294,
+    "status": "success",
+    "notes": "Merek \"ACER\" sudah ada di database."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46766,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-01T08:45:46.035Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8294,
+    "rows_after": 8295,
+    "status": "success",
+    "notes": "Tambah manual: EUROPE"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46767,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-15T08:02:30.231Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 8295,
+    "rows_after": 8295,
+    "status": "success",
+    "notes": "Edit manual: ACE -> ACES"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46768,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-20T00:58:46.697Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8295,
+    "rows_after": 8296,
+    "status": "success",
+    "notes": "Tambah manual: GAJAH"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46769,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-20T00:58:53.278Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8296,
+    "rows_after": 8297,
+    "status": "success",
+    "notes": "Tambah manual: GADJAH"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46770,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-20T01:08:55.092Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8297,
+    "rows_after": 8298,
+    "status": "success",
+    "notes": "Tambah manual: BANG"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46771,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-20T02:57:26.333Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8298,
+    "rows_after": 8299,
+    "status": "success",
+    "notes": "Tambah manual: DJARUM"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46772,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-20T04:36:07.375Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8299,
+    "rows_after": 8300,
+    "status": "success",
+    "notes": "Tambah manual: JANG"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46773,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-20T06:19:59.183Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8300,
+    "rows_after": 8301,
+    "status": "success",
+    "notes": "Tambah manual: DJANGO"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46774,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-20T06:20:01.518Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8301,
+    "rows_after": 8302,
+    "status": "success",
+    "notes": "Tambah manual: JANGO"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46775,
+  "fields": {
+    "admin_user": null,
+    "timestamp": "2026-07-20T06:20:12.620Z",
+    "filename": "Django Admin",
+    "fileformat": "MySQL",
+    "rows_before": 8302,
+    "rows_after": 8301,
+    "status": "warning",
+    "notes": "Otomatis: Hapus merek 'JANGO'"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46776,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-20T06:20:12.624Z",
+    "filename": "Manual Delete",
+    "fileformat": "manual",
+    "rows_before": 8302,
+    "rows_after": 8301,
+    "status": "success",
+    "notes": "Hapus manual: JANGO"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46777,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-20T08:54:33.585Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8301,
+    "rows_after": 8302,
+    "status": "success",
+    "notes": "Tambah manual: HUTANG"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46778,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-30T01:48:07.411Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8302,
+    "rows_after": 8303,
+    "status": "success",
+    "notes": "Tambah manual: PHOENIX"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46779,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-30T01:54:17.794Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8303,
+    "rows_after": 8303,
+    "status": "success",
+    "notes": "Merek \"ECENTIO\" sudah ada di database."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46780,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-30T02:08:43.690Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8303,
+    "rows_after": 8304,
+    "status": "success",
+    "notes": "Tambah manual: NATION"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46781,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-30T02:10:56.651Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8304,
+    "rows_after": 8305,
+    "status": "success",
+    "notes": "Tambah manual: PROBATION"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46782,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-30T02:14:14.987Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8305,
+    "rows_after": 8306,
+    "status": "success",
+    "notes": "Tambah manual: FONETIK"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46783,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-30T06:46:34.047Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8306,
+    "rows_after": 8307,
+    "status": "success",
+    "notes": "Tambah manual: ASER"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46784,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-30T06:47:24.511Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8307,
+    "rows_after": 8307,
+    "status": "success",
+    "notes": "Merek \"ACEHARDWARE\" sudah ada di database."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46785,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-30T06:48:04.079Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 8307,
+    "rows_after": 8307,
+    "status": "success",
+    "notes": "Edit manual: ACEHARDWARE -> ACEHARDWEAR"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46786,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-30T08:46:52.867Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8307,
+    "rows_after": 8307,
+    "status": "success",
+    "notes": "Merek \"ASER\" sudah ada di database."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46787,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-07-30T08:47:05.807Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 8307,
+    "rows_after": 8307,
+    "status": "success",
+    "notes": "Edit manual: ASER -> ASSER"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46788,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-08-10T01:46:29.440Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8307,
+    "rows_after": 8308,
+    "status": "success",
+    "notes": "Tambah manual: ACE"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46789,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-08-10T02:55:12.291Z",
+    "filename": "R (3).png",
+    "fileformat": "png",
+    "rows_before": 828,
+    "rows_after": 829,
+    "status": "success",
+    "notes": "Upload logo: TEAZZI"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46790,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-08-11T02:18:23.859Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8308,
+    "rows_after": 8309,
+    "status": "success",
+    "notes": "Tambah manual: TONG TJI"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46791,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-08-11T02:36:06.705Z",
+    "filename": "OIP (1).webp",
+    "fileformat": "webp",
+    "rows_before": 829,
+    "rows_after": 830,
+    "status": "success",
+    "notes": "Upload logo: CHATIME"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46792,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-08-11T02:37:13.359Z",
+    "filename": "Deux_Essential.png",
+    "fileformat": "png",
+    "rows_before": 830,
+    "rows_after": 831,
+    "status": "success",
+    "notes": "Upload logo: CALAIS"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46793,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-08-11T02:47:39.547Z",
+    "filename": "Old-Chang-Kee_May-2019.png",
+    "fileformat": "png",
+    "rows_before": 831,
+    "rows_after": 832,
+    "status": "success",
+    "notes": "Upload logo: OLD CHANG KEE (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46794,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-08-11T03:01:02.380Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8310,
+    "rows_after": 8311,
+    "status": "success",
+    "notes": "Tambah manual: EEL"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46795,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-12T01:39:35.014Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8311,
+    "rows_after": 8312,
+    "status": "success",
+    "notes": "Tambah manual: TEST"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46796,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-12T01:40:58.888Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8312,
+    "rows_after": 8313,
+    "status": "success",
+    "notes": "Tambah manual: SAMSUNG"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46797,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-12T01:42:25.849Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 8313,
+    "rows_after": 8313,
+    "status": "success",
+    "notes": "Edit manual: TEST -> SAMSUNG."
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46798,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-08-12T06:04:57.835Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 832,
+    "rows_after": 832,
+    "status": "success",
+    "notes": "Edit nama logo: NEGODUX -> NEGODUXS"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46799,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-08-12T06:06:31.024Z",
+    "filename": "negodux-logo-noBg-_TAeDHW8 (1).png",
+    "fileformat": "png",
+    "rows_before": 832,
+    "rows_after": 833,
+    "status": "warning",
+    "notes": "Upload logo: NEGODUX (merek baru otomatis ditambahkan) | PERINGATAN: mirip dengan logo yang sudah ada -> NEGODUXS (100.0%)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46800,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-12T06:56:09.737Z",
+    "filename": "negodux-logo-noBg-_TAeDHW8 (1).png",
+    "fileformat": "png",
+    "rows_before": 832,
+    "rows_after": 833,
+    "status": "warning",
+    "notes": "Upload logo: NEGODUX | PERINGATAN: mirip dengan logo yang sudah ada -> NEGODUXS (100.0%)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46801,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-12T07:49:31.672Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 833,
+    "rows_after": 833,
+    "status": "success",
+    "notes": "Edit logo: NEGODUXS -> NEGODUXSS"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46802,
+  "fields": {
+    "admin_user": [
+      "taufanstr"
+    ],
+    "timestamp": "2026-08-12T08:23:09.253Z",
+    "filename": "R (3).png",
+    "fileformat": "png",
+    "rows_before": 833,
+    "rows_after": 834,
+    "status": "warning",
+    "notes": "Upload logo: TEAZZI (merek baru otomatis ditambahkan) | PERINGATAN: mirip dengan logo yang sudah ada -> TEAZZI (100.0%), 5F5D0E5E-4F1F-43C9-867C-7D28AD1140A8 (92.42%), 355717B5-0B3F-4EDD-81F0-6C9553460585 (92.25%), C09F9333-3DF1-4247-9922-CCDD4CBCA71A (91.91%), 6436D702-34E6-458A-8268-9E28D86FDA59 (91.86%), 74F47C5F-9AF5-4A29-A5EB-6B7083AC1912 (91.6%), 44BB4838-8529-4C54-8E5E-46565837E35C (91.23%), 10FD81A0-8F3B-4AE8-9984-533E1783CAE3 (90.99%), 8087FDA0-BD34-45BC-92C6-6386406A987B (90.26%), 1B3C1CA4-CEF3-42BD-8C8A-0923C35111D9 (90.01%)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46803,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-13T01:01:03.496Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 834,
+    "rows_after": 834,
+    "status": "success",
+    "notes": "Edit gambar logo: NEGODUXSS (gambar diperbarui)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46804,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-19T07:06:32.006Z",
+    "filename": "OIP (3).webp",
+    "fileformat": "webp",
+    "rows_before": 834,
+    "rows_after": 835,
+    "status": "success",
+    "notes": "Upload logo: ACE HARDWARE (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46805,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-19T07:09:09.267Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 835,
+    "rows_after": 835,
+    "status": "success",
+    "notes": "Edit logo: ACE HARDWARE -> ACE HARDWEAR"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46806,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-19T07:53:57.314Z",
+    "filename": "OIP (2).webp",
+    "fileformat": "webp",
+    "rows_before": 835,
+    "rows_after": 836,
+    "status": "success",
+    "notes": "Upload logo: TIZI (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46807,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-19T07:54:36.791Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 836,
+    "rows_after": 836,
+    "status": "success",
+    "notes": "Edit gambar logo: TIZI (gambar diperbarui)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46808,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-19T08:26:00.656Z",
+    "filename": "logo.png",
+    "fileformat": "png",
+    "rows_before": 832,
+    "rows_after": 833,
+    "status": "success",
+    "notes": "Upload logo: SUNIB (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46809,
+  "fields": {
+    "admin_user": [
+      "pai"
+    ],
+    "timestamp": "2026-08-19T08:26:17.952Z",
+    "filename": "Manual Delete",
+    "fileformat": "manual",
+    "rows_before": 833,
+    "rows_after": 832,
+    "status": "success",
+    "notes": "Hapus logo: SUNIB"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46810,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-24T01:22:45.398Z",
+    "filename": "logo.png",
+    "fileformat": "png",
+    "rows_before": 832,
+    "rows_after": 833,
+    "status": "success",
+    "notes": "Upload logo: BINUS (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46811,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-24T08:41:31.525Z",
+    "filename": "image.png",
+    "fileformat": "png",
+    "rows_before": 833,
+    "rows_after": 834,
+    "status": "success",
+    "notes": "Upload logo: SUNIB"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46812,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-26T01:24:51.361Z",
+    "filename": "image.png",
+    "fileformat": "png",
+    "rows_before": 834,
+    "rows_after": 835,
+    "status": "success",
+    "notes": "Upload logo: TIJI (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46813,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-26T07:43:17.944Z",
+    "filename": "image.png",
+    "fileformat": "png",
+    "rows_before": 835,
+    "rows_after": 836,
+    "status": "success",
+    "notes": "Upload logo: GARUDA (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46814,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-26T07:46:37.136Z",
+    "filename": "image.png",
+    "fileformat": "png",
+    "rows_before": 836,
+    "rows_after": 837,
+    "status": "success",
+    "notes": "Upload logo: CUPBOP (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46815,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-26T07:51:54.789Z",
+    "filename": "image.png",
+    "fileformat": "png",
+    "rows_before": 837,
+    "rows_after": 838,
+    "status": "success",
+    "notes": "Upload logo: GOJEK (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46816,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-26T08:20:39.351Z",
+    "filename": "image.png",
+    "fileformat": "png",
+    "rows_before": 838,
+    "rows_after": 839,
+    "status": "success",
+    "notes": "Upload logo: MOBIL1 (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46817,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-26T08:24:18.148Z",
+    "filename": "image.png",
+    "fileformat": "png",
+    "rows_before": 839,
+    "rows_after": 840,
+    "status": "success",
+    "notes": "Upload logo: SHELL (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46818,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-26T08:26:24.858Z",
+    "filename": "image.png",
+    "fileformat": "png",
+    "rows_before": 840,
+    "rows_after": 841,
+    "status": "success",
+    "notes": "Upload logo: KRAFT (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46819,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-26T08:34:00.371Z",
+    "filename": "image.png",
+    "fileformat": "png",
+    "rows_before": 841,
+    "rows_after": 842,
+    "status": "success",
+    "notes": "Upload logo: XIAOMI (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46820,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-26T08:36:39.876Z",
+    "filename": "OIP (6).webp",
+    "fileformat": "webp",
+    "rows_before": 842,
+    "rows_after": 843,
+    "status": "success",
+    "notes": "Upload logo: SAMSUNG"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46821,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-26T08:39:36.158Z",
+    "filename": "image.png",
+    "fileformat": "png",
+    "rows_before": 843,
+    "rows_after": 844,
+    "status": "success",
+    "notes": "Upload logo: BURGER KING (merek baru otomatis ditambahkan)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46822,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-31T08:42:54.595Z",
+    "filename": "Django Admin / System",
+    "fileformat": "MySQL",
+    "rows_before": 8329,
+    "rows_after": 8330,
+    "status": "success",
+    "notes": "Otomatis: Tambah merek 'AESA'"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46823,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-08-31T08:42:54.598Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8329,
+    "rows_after": 8330,
+    "status": "success",
+    "notes": "Tambah manual: AESA"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46824,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-09-01T08:31:58.049Z",
+    "filename": "saab-AESA-fighter-jet-radar.jpg",
+    "fileformat": "jpg",
+    "rows_before": 845,
+    "rows_after": 846,
+    "status": "success",
+    "notes": "Upload logo: AESA (via URL)"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46825,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-09-03T08:08:24.340Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8330,
+    "rows_after": 8331,
+    "status": "success",
+    "notes": "Tambah manual: KNEEGROW"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46826,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-09-03T08:08:39.722Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 8331,
+    "rows_after": 8331,
+    "status": "success",
+    "notes": "Edit manual: KNEEGROW -> KNEEGRO"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46827,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-09-03T08:09:28.267Z",
+    "filename": "Manual Input",
+    "fileformat": "manual",
+    "rows_before": 8331,
+    "rows_after": 8332,
+    "status": "success",
+    "notes": "Tambah manual: NEIGAR"
+  }
+},
+{
+  "model": "penelusuran_fonetik.databasechangelog",
+  "pk": 46828,
+  "fields": {
+    "admin_user": [
+      "ista"
+    ],
+    "timestamp": "2026-09-03T08:09:47.422Z",
+    "filename": "Manual Edit",
+    "fileformat": "manual",
+    "rows_before": 8332,
+    "rows_after": 8332,
+    "status": "success",
+    "notes": "Edit manual: NEIGAR -> NEIGGAR"
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37560,
+  "fields": {
+    "nama_merek": "AMAN MAKSAN",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37561,
+  "fields": {
+    "nama_merek": "SLIMEXPRESS",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37562,
+  "fields": {
+    "nama_merek": "HERI PEMAD",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37563,
+  "fields": {
+    "nama_merek": "SEAFOOD JAYA 27",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37564,
+  "fields": {
+    "nama_merek": "NEXVAPOR",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37565,
+  "fields": {
+    "nama_merek": "GALERI RASA CHANNEL DAN LUKISAN.",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37566,
+  "fields": {
+    "nama_merek": "SURABAYA INTERCULTURAL SCHOOL + LOGO THE COBRAS",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37567,
+  "fields": {
+    "nama_merek": "CULTURESCAPE + LOGO",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37568,
+  "fields": {
+    "nama_merek": "RASA SIIMBUU",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37569,
+  "fields": {
+    "nama_merek": "MAKIN SEHAT",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37570,
+  "fields": {
+    "nama_merek": "SNAPSHELL",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37571,
+  "fields": {
+    "nama_merek": "MAMJIP",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37572,
+  "fields": {
+    "nama_merek": "SUNCTOOLS",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37573,
+  "fields": {
+    "nama_merek": "QMA SKIN CARE",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37574,
+  "fields": {
+    "nama_merek": "MEDEBITE",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37575,
+  "fields": {
+    "nama_merek": "LEPASA BEAUTY & LUKISAN",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37576,
+  "fields": {
+    "nama_merek": "ECOREBOND",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37577,
+  "fields": {
+    "nama_merek": "GUNDUL",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37578,
+  "fields": {
+    "nama_merek": "ASGLOB COATING",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37579,
+  "fields": {
+    "nama_merek": "PETROKIMIA KAYAKU",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37580,
+  "fields": {
+    "nama_merek": "AYAM AIR TERJUN KENCONO DAN LOGO",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37581,
+  "fields": {
+    "nama_merek": "YANG'S HEALTH CARE",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37582,
+  "fields": {
+    "nama_merek": "NELIN BATIK",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37583,
+  "fields": {
+    "nama_merek": "SAMPOERNA KARYA BANGSA",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37584,
+  "fields": {
+    "nama_merek": "YOU UNLIMITED",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37585,
+  "fields": {
+    "nama_merek": "DYSAN",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37586,
+  "fields": {
+    "nama_merek": "ADORA",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37587,
+  "fields": {
+    "nama_merek": "20AGAIN",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37588,
+  "fields": {
+    "nama_merek": "AISHEMI",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37589,
+  "fields": {
+    "nama_merek": "DOMIS",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37590,
+  "fields": {
+    "nama_merek": "LRC CAKRAWALA",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37591,
+  "fields": {
+    "nama_merek": "NEK BUND",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37592,
+  "fields": {
+    "nama_merek": "MANOKKING + LUKISAN AYAM",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37593,
+  "fields": {
+    "nama_merek": "IFAITHOR",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37594,
+  "fields": {
+    "nama_merek": "PEMPEK MAK NAI",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37595,
+  "fields": {
+    "nama_merek": "TANGAN KANAN COFFEE & EATERY + GAMBAR/LUKISAN",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37596,
+  "fields": {
+    "nama_merek": "MUGMEER",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37597,
+  "fields": {
+    "nama_merek": "LUNGA",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37598,
+  "fields": {
+    "nama_merek": "BIOZE + KARAKTER HURUF MANDARIN + LOGO",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37599,
+  "fields": {
+    "nama_merek": "POSE MODELLING ACADEMY",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37600,
+  "fields": {
+    "nama_merek": "LOGO/ LUKISAN",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37601,
+  "fields": {
+    "nama_merek": "LUKISAN V",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37602,
+  "fields": {
+    "nama_merek": "BOTOL AQUA (BIMA) 3D",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37603,
+  "fields": {
+    "nama_merek": "TZM",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37604,
+  "fields": {
+    "nama_merek": "YOURCOIN",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37605,
+  "fields": {
+    "nama_merek": "TRICHOMETA",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37606,
+  "fields": {
+    "nama_merek": "DATIN LYANAZ HASSAN DAN LOGO",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37607,
+  "fields": {
+    "nama_merek": "BACKHAND BAR",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37608,
+  "fields": {
+    "nama_merek": "ALFRIATIN",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37609,
+  "fields": {
+    "nama_merek": "BRAVINO",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37610,
+  "fields": {
+    "nama_merek": "AERELA + LOGO",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37611,
+  "fields": {
+    "nama_merek": "NANOLITE EYESENTIAL LED + LOGO",
+    "created_at": "2026-04-29T06:36:25.185Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37612,
+  "fields": {
+    "nama_merek": "DIANA",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37613,
+  "fields": {
+    "nama_merek": "DILAN SANDWICH + LUKISAN",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37614,
+  "fields": {
+    "nama_merek": "TUNGKAL PUNYE",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37615,
+  "fields": {
+    "nama_merek": "B-FOÊR SKIN",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37616,
+  "fields": {
+    "nama_merek": "INSEKTISIDA ANTASHENA",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37617,
+  "fields": {
+    "nama_merek": "SCULPT SKIN",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37618,
+  "fields": {
+    "nama_merek": "LADYZONE",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37619,
+  "fields": {
+    "nama_merek": "ARIBBADA +LOGO",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37620,
+  "fields": {
+    "nama_merek": "RUMFITIF",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37621,
+  "fields": {
+    "nama_merek": "DAPUR BUNDA HAN",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37622,
+  "fields": {
+    "nama_merek": "CAPTAIN'S SEAFOOD",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37623,
+  "fields": {
+    "nama_merek": "F'NC FROZEN FOODS + LOGO",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37624,
+  "fields": {
+    "nama_merek": "BIOGLOW + LOGO",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37625,
+  "fields": {
+    "nama_merek": "CANDY TAMAGA + HURUF KANJI DIBACA AMETAMAGA",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37626,
+  "fields": {
+    "nama_merek": "YUSHI & LUKISAN",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37627,
+  "fields": {
+    "nama_merek": "HOLYCUT",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37628,
+  "fields": {
+    "nama_merek": "AQUABIND",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37629,
+  "fields": {
+    "nama_merek": "NEW DMORA",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37630,
+  "fields": {
+    "nama_merek": "ABATA SAUDI FRIED CHICKEN KHAS SAUDI, HARGA FRIENDLY",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37631,
+  "fields": {
+    "nama_merek": "MEDIKIDS BY MHDC GROUP",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37632,
+  "fields": {
+    "nama_merek": "THE GALLERY",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37633,
+  "fields": {
+    "nama_merek": "AMPERA TOURISM RUN",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37634,
+  "fields": {
+    "nama_merek": "AYAM KAMPUNG PINANG",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37635,
+  "fields": {
+    "nama_merek": "NUMAN",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37636,
+  "fields": {
+    "nama_merek": "Z & Y LAB BEAUTY DAN LUKISAN",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37637,
+  "fields": {
+    "nama_merek": "GOODBROKS",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37638,
+  "fields": {
+    "nama_merek": "CULTURE SHOCK",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37639,
+  "fields": {
+    "nama_merek": "JOLLYDAY",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37640,
+  "fields": {
+    "nama_merek": "BAZE",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37641,
+  "fields": {
+    "nama_merek": "SADALI",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37642,
+  "fields": {
+    "nama_merek": "BOBAKAFE LOOP + LUKISAN",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37643,
+  "fields": {
+    "nama_merek": "LAMALIF",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37644,
+  "fields": {
+    "nama_merek": "ZEBRA TERANG",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37645,
+  "fields": {
+    "nama_merek": "BOTOL AQUA (KHRISNA) 3D",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37646,
+  "fields": {
+    "nama_merek": "NATCHA HEALTHY",
+    "created_at": "2026-04-29T06:36:25.186Z",
+    "uploaded_by": null
+  }
+},
+{
+  "model": "penelusuran_fonetik.datamerek",
+  "pk": 37647,
+  "fields": {
+    "nama_merek": 
