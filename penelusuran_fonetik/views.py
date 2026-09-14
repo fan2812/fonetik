@@ -537,7 +537,7 @@ def logo_search_view(request):
                     except Exception:
                         error = 'Gagal memproses gambar. Coba lagi atau gunakan format lain.'
 
-        context = {
+    context = {
         'hasil_visual':        hasil_visual,
         'hasil_rescue':        hasil_rescue,
         'query_logo':          query_logo,
