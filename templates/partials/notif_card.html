@@ -1,0 +1,34 @@
+{# Kartu notifikasi di tengah layar. Parameter: tipe (error | warning | success), pesan, isi_template (opsional) #}
+<div class="notif-backdrop" role="presentation">
+    <div class="notif-card notif-{% if tipe == 'error' %}error{% elif tipe == 'warning' %}warning{% else %}success{% endif %}"
+        role="alertdialog" aria-modal="true">
+        {% if tipe == 'error' %}
+            <i class="bi bi-volume-up-fill notif-icon notif-error"></i>
+            <div class="notif-title">Error</div>
+        {% elif tipe == 'warning' %}
+            <i class="bi bi-exclamation-triangle-fill notif-icon notif-warning"></i>
+            <div class="notif-title">Peringatan</div>
+        {% else %}
+            <i class="bi bi-check-circle-fill notif-icon notif-success"></i>
+            <div class="notif-title">Berhasil</div>
+        {% endif %}
+
+        <div class="notif-msg">{{ pesan }}</div>
+
+        {% if isi_template %}
+            {% include isi_template %}
+        {% else %}
+            <button type="button" class="notif-btn"
+                    onclick="this.closest('.notif-backdrop').remove()">OK</button>
+        {% endif %}
+    </div>
+</div>
+<script>
+(function () {
+    const el = document.currentScript.previousElementSibling;   // kartu di atas
+    const onKey = (e) => { if (e.key === 'Escape') tutup(); };
+    const tutup = () => { document.removeEventListener('keydown', onKey); el.remove(); };
+    el.addEventListener('click', (e) => { if (e.target === el) tutup(); });   // klik di luar kartu
+    document.addEventListener('keydown', onKey);
+})();
+</script>

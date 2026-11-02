@@ -98,6 +98,6 @@ def log_merek_delete(sender, instance, **kwargs):
         fileformat  = "MySQL",
         rows_before = current_count + 1,
         rows_after  = current_count,
-        status      = "warning",
+        status      = "deleted",
         notes       = f"Otomatis: Hapus merek '{instance.nama_merek}'"
     )

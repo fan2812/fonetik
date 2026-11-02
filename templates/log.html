@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Log Database - Penelusuran Fonetik{% endblock %}
+{% block title %}Log Database - Penelusuran Merek{% endblock %}
 
-{% block brand_title %}Admin Panel - Penelusuran Fonetik{% endblock %}
+{% block brand_title %}Admin Panel - {% if from_page == 'logo' %}Log Logo{% else %}Log Nama Merek{% endif %}{% endblock %}
 
 {% block navbar_buttons %}
     {% if from_page == 'logo' %}
@@ -57,7 +57,6 @@
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div>
             <h3 class="fw-bold text-dark mb-1">Riwayat Pembaruan Database</h3>
-            <p class="text-muted mb-0">Pantau aktivitas CRUD dan upload database secara real-time.</p>
         </div>
     </div>
 
@@ -65,7 +64,7 @@
         <div class="col-md-6">
             <div class="stats-card bg-custom-blue shadow-sm d-flex justify-content-between align-items-center">
                 <div>
-                    {% if from_page == 'fonetik' %}
+                    {% if from_page == 'merek' %}
                     <div class="stats-label">Total Merek Terdaftar</div>
                     <div class="stats-value">{{ total_brands|default:0 }}</div>
                     {% else %}
@@ -87,12 +86,12 @@
         </div>
     </div>
 
-    {% if from_page == 'fonetik' %}
+    {% if from_page == 'merek' %}
     <div class="log-card shadow-sm mb-4" id="kelola-merek">
         <div class="p-4 pb-0">
             <h5 class="fw-bold text-dark mb-3">Kelola Merek Terdaftar</h5>
             <form method="GET" action="{% url 'database_log' %}#kelola-merek" class="mb-3" style="max-width: 400px;">
-                <input type="hidden" name="from" value="fonetik">
+                <input type="hidden" name="from" value="merek">
                 <div class="input-group">
                     <input type="text" name="mq" class="form-control" placeholder="Cari merek..." value="{{ merek_query }}">
                     <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
@@ -288,6 +287,8 @@
                                 <span class="badge bg-success-subtle text-success badge-status">SUCCESS</span>
                             {% elif log.status == 'warning' %}
                                 <span class="badge bg-warning-subtle text-warning badge-status">WARNING</span>
+                            {% elif log.status == 'deleted' %}
+                                <span class="badge bg-danger-subtle text-danger badge-status">DELETED</span>
                             {% else %}
                                 <span class="badge bg-danger-subtle text-danger badge-status">FAILED</span>
                             {% endif %}
@@ -326,7 +327,9 @@ function tambahBarisLog(data) {
     if (emptyRow) emptyRow.closest('tr').remove();
 
     const newRow = document.createElement('tr');
-    const statusBadge = data.log_status === 'warning'
+    const statusBadge = data.log_status === 'deleted'
+        ? '<span class="badge bg-danger-subtle text-danger badge-status">DELETED</span>'
+        : data.log_status === 'warning'
         ? '<span class="badge bg-warning-subtle text-warning badge-status">WARNING</span>'
         : '<span class="badge bg-success-subtle text-success badge-status">SUCCESS</span>';
     newRow.innerHTML = `
@@ -376,7 +379,7 @@ async function submitEditMerek() {
         closeEditMerek();
         if (data.log_time) tambahBarisLog(data);
     } else {
-        alert(data.message);
+        notifDariRespons(data);
     }
 }
 async function deleteMerek(id, nama) {
@@ -390,7 +393,7 @@ async function deleteMerek(id, nama) {
         document.getElementById('merek-row-' + id).remove();
         if (data.log_time) tambahBarisLog(data);
     } else {
-        alert(data.message);
+        notifDariRespons(data);
     }
 }
 
@@ -517,7 +520,7 @@ async function submitEditLogo() {
         closeEditLogo();
         if (data.log_time) tambahBarisLog(data);
     } else {
-        alert(data.message);
+        notifDariRespons(data);
     }
 }
 
@@ -532,7 +535,7 @@ async function deleteLogo(id, nama) {
         document.getElementById('logo-row-' + id).remove();
         if (data.log_time) tambahBarisLog(data);
     } else {
-        alert(data.message);
+        notifDariRespons(data);
     }
 }
 </script>

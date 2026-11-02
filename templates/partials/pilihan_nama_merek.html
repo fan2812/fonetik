@@ -1,0 +1,21 @@
+<div class="small text-muted mb-3">
+    Diketik: <strong>"{{ nama_merek_qry }}"</strong> &nbsp;|&nbsp; Terdeteksi: <strong>"{{ teks_terdeteksi }}"</strong>
+</div>
+<div class="d-flex flex-column gap-2">
+    <form method="POST" enctype="multipart/form-data" class="m-0">
+        {% csrf_token %}
+        <input type="hidden" name="tmp_logo_path" value="{{ tmp_logo_path }}">
+        <input type="hidden" name="nama_merek" value="{{ teks_terdeteksi }}">
+        <input type="hidden" name="abaikan_peringatan" value="1">
+        <button type="submit" class="notif-pilihan w-100">Pakai "{{ teks_terdeteksi }}" (terdeteksi)</button>
+    </form>
+    <form method="POST" enctype="multipart/form-data" class="m-0">
+        {% csrf_token %}
+        <input type="hidden" name="tmp_logo_path" value="{{ tmp_logo_path }}">
+        <input type="hidden" name="nama_merek" value="{{ nama_merek_qry }}">
+        <input type="hidden" name="abaikan_peringatan" value="1">
+        <button type="submit" class="notif-pilihan w-100">Tetap cari pakai "{{ nama_merek_qry }}"</button>
+    </form>
+    <button type="button" class="btn btn-link text-muted"
+            onclick="this.closest('.notif-backdrop').remove()">Batal</button>
+</div>

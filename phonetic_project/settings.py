@@ -179,9 +179,11 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '10/minute',
+        'user': '30/minute',
     }
 }
 
@@ -190,3 +192,6 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
+
+# Tambahkan di baris paling bawah settings.py
+LOGIN_URL = 'login'               # redirect ke halaman login jika belum login

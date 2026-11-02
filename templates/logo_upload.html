@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}Update DB Logo{% endblock %}
-{% block brand_title %}Admin Panel - Penelusuran Fonetik{% endblock %}
+{% block brand_title %}Admin Panel - Update DB Logo{% endblock %}
 
 {% block navbar_buttons %}
     <a href="{% url 'logo_search' %}" class="btn-nav-custom btn-nav-light">
@@ -44,6 +44,7 @@
     .logo-card img { width:100%; height:80px; object-fit:contain; border-radius:6px; margin-bottom:8px; }
     .logo-name { font-size:0.8rem; font-weight:700; color:#313E5E;
                 white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .logo-card img { width:100%; height:80px; object-fit:contain; border-radius:6px; margin-bottom:8px; cursor:zoom-in; }
 </style>
 {% endblock %}
 
@@ -53,7 +54,7 @@
     <div class="card-panel">
         <h5><i class="bi bi-plus-circle me-2"></i>Tambah Logo ke Database</h5>
         <p class="text-muted small mb-3">
-            Setiap logo yang diupload akan diproses oleh model ResNet50 untuk mengekstrak feature embedding secara otomatis.
+            Upload logo baru ke database. Pastikan nama merek sesuai dengan logo yang diunggah.
         </p>
         <form id="uploadLogoForm" enctype="multipart/form-data">
             {% csrf_token %}
@@ -88,8 +89,6 @@
                     </button>
                 </div>
             </div>
-            <div class="alert alert-success mt-3" id="upload-ok"  style="display:none;"></div>
-            <div class="alert alert-danger  mt-3" id="upload-err" style="display:none;"></div>
         </form>
     </div>
 
@@ -103,7 +102,8 @@
             {% for logo in logos %}
             <div class="logo-card" id="card-{{ logo.id }}">
                 {% if logo.logo_file %}
-                <img src="{{ logo.logo_file.url }}" alt="{{ logo.nama_merek }}">
+                <img src="{{ logo.logo_file.url }}" alt="{{ logo.nama_merek }}"
+                    onclick="showZoom('{{ logo.logo_file.url }}', '{{ logo.nama_merek }}')">
                 {% else %}
                 <div style="height:80px;display:flex;align-items:center;justify-content:center;color:#ced4da;">
                     <i class="bi bi-image" style="font-size:2rem;"></i>
@@ -120,12 +120,21 @@
         </div>
         {% endif %}
     </div>
+    <div id="zoomModal" onclick="this.style.display='none'"
+    style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.85);
+            align-items:center; justify-content:center; cursor:zoom-out;">
+    <img id="zoomImg" style="max-width:85vw; max-height:85vh; border-radius:8px;">
+    </div>
 
 </div>
 {% endblock %}
 
 {% block extra_script %}
 <script>
+    function showZoom(url, nama) {
+        document.getElementById('zoomImg').src = url;
+        document.getElementById('zoomModal').style.display = 'flex';
+    }
     const logoFileInput   = document.getElementById('logoFileInput');
     const logoUrlInput    = document.getElementById('logoUrlInput');
     const dropzone        = document.getElementById('logoDropzone');
@@ -200,9 +209,6 @@
 
     document.getElementById('uploadLogoForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const ok  = document.getElementById('upload-ok');
-        const err = document.getElementById('upload-err');
-        ok.style.display = err.style.display = 'none';
         const btn = this.querySelector('button[type=submit]');
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Memproses...';
@@ -210,23 +216,17 @@
             const res  = await fetch("{% url 'logo_upload' %}", { method:'POST', body: new FormData(this) });
             const data = await res.json();
             if (res.ok && data.status === 'ok') {
-                if (data.duplicate_warning) {
-                    ok.className = 'alert alert-warning mt-3';
-                    ok.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-2"></i>${data.duplicate_warning}`;
-                } else {
-                    ok.className = 'alert alert-success mt-3';
-                    ok.textContent = data.message;
-                }
-                ok.style.display = 'block';
                 this.reset();
                 clearDropzone();
-                setTimeout(() => location.reload(), 2500);
+                tampilkanNotif(data.duplicate_warning ? 'warning' : 'success',
+                               data.duplicate_warning || data.message,
+                               () => location.reload());
             } else {
-                err.textContent = data.message || 'Terjadi kesalahan.'; err.style.display = 'block';
+                tampilkanNotif('error', data.message || 'Terjadi kesalahan.');
                 btn.disabled = false; btn.innerHTML = '<i class="bi bi-cloud-arrow-up me-2"></i>Upload';
             }
         } catch(e) {
-            err.textContent = 'Gagal terhubung ke server.'; err.style.display = 'block';
+            tampilkanNotif('error', 'Gagal terhubung ke server.');
             btn.disabled = false; btn.innerHTML = '<i class="bi bi-cloud-arrow-up me-2"></i>Upload';
         }
     });

@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .ml_engine import extract_embedding          # ← sudah ada di ml_engine.py
+from .ml_engine import extract_embedding_and_type
 from .services import cari_fonetik, cari_logo_mirip, validate_image_file
 from .serializers import (
     PhoneticSearchRequestSerializer,
@@ -52,10 +52,10 @@ def api_search_logo(request):
     if not is_valid:
         return Response({'detail': err_msg}, status=status.HTTP_400_BAD_REQUEST)
 
-    # extract_embedding() di ml_engine.py langsung terima raw bytes
+        # extract_embedding_and_type() sekaligus baca vector + hasil OCR + jenis logo
     cache_key = f'logo_search_{hashlib.md5(img_bytes).hexdigest()}'
-    query_emb = extract_embedding(img_bytes)
-    hasil     = cari_logo_mirip(query_emb, cache_key=cache_key)
+    query_emb, info = extract_embedding_and_type(img_bytes)
+    hasil     = cari_logo_mirip(query_emb, cache_key=f"{cache_key}_{info['jenis']}", jenis=info['jenis'])
 
     return Response({
         'count':   len(hasil),

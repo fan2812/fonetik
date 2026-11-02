@@ -1,14 +1,16 @@
 import os
 import re
+import io
 import time
 import jellyfish
 
+from PIL import Image
 from django.conf import settings
 from django.core.cache import cache
 from django.db.models import Case, When, Value, IntegerField                                    # import cache Django
 from .models import DataMerek, LogoDatabaseEntry
 from .ml_engine import str_to_embedding, cosine_similarity
-from .constants import ALLOWED_LOGO_EXT, LOGO_SIM_THRESHOLD, MAX_LOGO_SIZE_MB, LOGO_NAME_RESCUE_THRESHOLD
+from .constants import (ALLOWED_LOGO_EXT, LOGO_SIM_THRESHOLD, MAX_LOGO_SIZE_MB, LOGO_NAME_RESCUE_THRESHOLD, LOGO_SIM_THRESHOLD_SIMBOL, LOGO_SIM_THRESHOLD_CAMPURAN, LOGO_SIM_THRESHOLD_TEKS, LOGO_PHONETIC_THRESHOLD_TEKS)
 
 def normalize_phonetic(word):
     if not word:
@@ -25,7 +27,7 @@ def normalize_phonetic(word):
         #bahasa inggris pola 3 huruf atau lebih
         "THE": "DE", "AND": "END", "FOR": "FO", "WITH": "WIT", "OUGH": "AF", "TION": "SYN", "SION": "SYN", "IGH": "AY", "TIO": "SIO", 
         "EIGH": "AY", "OUGH": "AF", "OUGH": "OF", "OUGH": "AW", "OUGH": "OW", "OUGH": "OO", "OUGH": "UFF", "PHO": "FO", "ACE": "ES",
-        "KEE": "KI", "EVE": "IV", "EAD": "ED", "EEL": "IL", "EAT": "IT", "ECK": "EK", "EEN": "IN", "EER": "ER",
+        "KEE": "KI", "EVE": "IV", "EAD": "ED", "EEL": "IL", "EAT": "IT", "ECK": "EK", "EEN": "IN", "EER": "ER", "TEA": "TI",
         
         #bahasa inggris pola 2 huruf
         "AN": "EN", "OF": "OV", "TO": "TU", "BY": "BAI", "ON": "ONN", "AT": "ET", "PH": "F", "EC": "ES", "EU": "U", "EE": "I", "ST": "S",
@@ -92,39 +94,46 @@ def validate_image_file(file_bytes, filename):
     return True, ''
 
 
-def cari_logo_mirip(query_emb, nama_merek_qry='', cache_key=None):
-    """Logic inti similarity logo dan nama merek, karena ada limitasi di mlnya jadi yang ada background juga masih bisa terdeteksi. Dipanggil logo_search_view (web) & api_search_logo (API)."""
+def cari_logo_mirip(query_emb, nama_merek_qry='', cache_key=None, jenis=None):
     if cache_key:
         cached_result = cache.get(cache_key)
         if cached_result is not None:
             return cached_result
-    
+
     norm_query = normalize_phonetic(nama_merek_qry) if nama_merek_qry else ''
+    thr_vec, thr_fon = {
+        'simbol':   (LOGO_SIM_THRESHOLD_SIMBOL,   LOGO_NAME_RESCUE_THRESHOLD),
+        'campuran': (LOGO_SIM_THRESHOLD_CAMPURAN, LOGO_NAME_RESCUE_THRESHOLD),
+        'teks':     (LOGO_SIM_THRESHOLD_TEKS,     LOGO_PHONETIC_THRESHOLD_TEKS),
+    }.get(jenis, (LOGO_SIM_THRESHOLD, LOGO_NAME_RESCUE_THRESHOLD))   # jenis None -> perilaku lama
     results = []
     for entry in LogoDatabaseEntry.objects.exclude(embedding='').exclude(embedding='[]'):
         db_emb = str_to_embedding(entry.embedding)
         if not db_emb:
             continue
         score = cosine_similarity(query_emb, db_emb)
-        lolos_vector = score >= LOGO_SIM_THRESHOLD
-        rescued = False
-        
-        if not lolos_vector and norm_query:
+        lolos_vector = score >= thr_vec
+        nama_cocok = False
+
+        if norm_query:
             norm_db = normalize_phonetic(entry.nama_merek)
             skor_fonetik = jellyfish.jaro_winkler_similarity(norm_query, norm_db)
             skor_fonetik = max(0.0, skor_fonetik - jellyfish.levenshtein_distance(norm_query, norm_db) * 0.10)
-            rescued = skor_fonetik >= LOGO_NAME_RESCUE_THRESHOLD
-        
-        if lolos_vector or rescued:
+            nama_cocok = skor_fonetik >= thr_fon
+
+        if lolos_vector or nama_cocok:
             results.append({
-                'nama_merek': entry.nama_merek,
-                'logo_url':   entry.get_logo_url(),
-                'similarity': round(score * 100, 2),
-                'rescued_by_nama' : rescued,
+                'id':           entry.id,
+                'nama_merek':   entry.nama_merek,
+                'logo_url':     entry.get_logo_url(),
+                'similarity':   round(score * 100, 2),
+                'lolos_vector': lolos_vector,
+                'nama_cocok':   nama_cocok,
             })
+
     results.sort(key=lambda x: x['similarity'], reverse=True)
     if cache_key:
-        cache.set(cache_key, results, 300)  # Cache for 5 minutes
+        cache.set(cache_key, results, 300)
     return results
 
 def cari_merek_autocomplete(query, limit=8):
@@ -154,6 +163,28 @@ def cari_merek_autocomplete(query, limit=8):
     )
     cache.set(cache_key, matches, 300)
     return matches
+
+
+def cek_kecocokan_nama_dan_ocr(nama_merek_qry, teks_ocr, min_score=0.65):
+    """True kalau nama yang diketik user masuk akal dibanding teks yang kebaca di gambar
+    (dicek per-kata, diambil skor terbaiknya). False kalau kemungkinan besar user salah
+    ketik / lupa ganti field nama merek pas ganti gambar query.
+    Kalau salah satu input kosong (nama gak diisi, atau OCR gagal baca apapun),
+    dianggap aman dan gak nge-block — bukan tanggung jawab fungsi ini buat maksa OCR
+    selalu berhasil."""
+    if not nama_merek_qry or not teks_ocr:
+        return True
+
+    norm_input = normalize_phonetic(nama_merek_qry)
+    kata_ocr   = teks_ocr.upper().split()
+
+    skor_terbaik = 0.0
+    for kata in kata_ocr:
+        norm_kata = normalize_phonetic(kata)
+        skor = jellyfish.jaro_winkler_similarity(norm_input, norm_kata)
+        skor_terbaik = max(skor_terbaik, skor)
+
+    return skor_terbaik >= min_score
 
 
 def filter_by_phonetic(nama_merek_query, vector_hits, min_score=0.75):
@@ -194,3 +225,28 @@ def cleanup_tmp_files():
                 os.remove(fpath)
         except Exception:
             pass
+        
+def optimize_logo_image(img_bytes, source_name, max_dim=1200, quality=85):
+    """
+    Konversi gambar upload ke WebP dan downscale kalau kegedean, sebelum
+    disimpan ke folder media/logos/. Mencegah asset folder numpuk file
+    mentah beraneka format/ukuran. Return (webp_bytes, new_filename).
+    """
+    img = Image.open(io.BytesIO(img_bytes))
+
+    if max(img.size) > max_dim:
+        img.thumbnail((max_dim, max_dim), Image.LANCZOS)
+
+    # WebP dukung transparansi -- convert ke RGBA kalau ada alpha,
+    # RGB kalau nggak, daripada maksa semua RGB dan ngilangin transparansi.
+    if img.mode in ('RGBA', 'LA') or (img.mode == 'P' and 'transparency' in img.info):
+        img = img.convert('RGBA')
+    else:
+        img = img.convert('RGB')
+
+    buffer = io.BytesIO()
+    img.save(buffer, format='WEBP', quality=quality)
+    buffer.seek(0)
+
+    stem = source_name.rsplit('.', 1)[0]
+    return buffer.getvalue(), f'{stem}.webp'

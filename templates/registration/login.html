@@ -1,10 +1,13 @@
 {% extends "admin/login.html" %}
 {% load i18n static %}
 
+{% block title %}Login Admin - Penelusuran Merek{% endblock %}
+
 {% block extrastyle %}
 {{ block.super }}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
     body {
@@ -20,7 +23,7 @@
 
     /* ── Navbar: gradient kuning → biru DJKI ── */
     .navbar-custom {
-        background: linear-gradient(135deg, #FFCD02 0%, #FFCD02 30%, #c9a200 42%, #313E5E 70%);
+        background: linear-gradient(135deg, #FECD08 0%, #FECD08 15%, #c9a200 35%, #313E5E 65%);
         z-index: 10000;
         min-height: 98px;
     }
@@ -40,6 +43,27 @@
         background-color: white !important; padding: 5px !important;
         border-radius: 8px !important; vertical-align: unset !important; border: none !important;
     }
+
+    /* ── Logo + nama app dalam satu kotak putih (sama dengan base.html) ── */
+    .brand-lockup {
+        display: flex; align-items: center; gap: 12px;
+        height: 55px; padding: 5px; background-color: #fff;
+        border-radius: 8px; margin-top: -2px; flex-shrink: 0;
+    }
+    .navbar-custom .brand-lockup img {
+        height: 45px !important; padding: 0 !important; border-radius: 0 !important;
+        background-color: transparent !important;
+    }
+    .brand-divider { height: 26px; width: 2px; flex-shrink: 0; background-color: #cbd5e1; }
+    .brand-app {
+        flex-direction: column; justify-content: center; text-align: left;
+        line-height: 1.1; padding-right: 12px; font-family: 'Inter', sans-serif;
+    }
+    .brand-app-title {
+        font-size: 11px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 0.5px; white-space: nowrap; margin-bottom: 2px; color: #0f172a;
+    }
+    .brand-app-sub { font-size: 9px; font-weight: 500; white-space: nowrap; color: #64748b; }
     .brand-text {
         font-size: 1.25rem; font-weight: 600; color: white; line-height: 1.2;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
@@ -152,7 +176,14 @@
 <nav class="navbar navbar-dark navbar-custom shadow-sm fixed-top" style="padding: 16px 16px;">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center gap-3">
-            <img src="{% static 'logo_dgip.png' %}" alt="Logo DGIP">
+            <div class="brand-lockup">
+                <img src="{% static 'logodjki.webp' %}" alt="Logo DJKI">
+                <div class="brand-divider d-none d-lg-block"></div>
+                <div class="brand-app d-none d-lg-flex">
+                    <span class="brand-app-title">Penelusuran</span>
+                    <span class="brand-app-sub">Fonetik dan Logo</span>
+                </div>
+            </div>
             <span class="brand-text copyable-text">Penelusuran Fonetik</span>
         </div>
         <div class="d-flex flex-column align-items-end">

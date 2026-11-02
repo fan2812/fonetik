@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Penelusuran Fonetik{% endblock %}</title>
+    <title>{% block title %}Penelusuran Merek{% endblock %}</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         body {
@@ -33,6 +33,45 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
             text-shadow: 0 1px 4px rgba(0,0,0,0.45);
         }
+
+        /* Logo + nama app dalam satu kotak putih (gaya sama dengan header PDKKI) */
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            height: 55px;
+            padding: 5px;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-top: -2px;
+            flex-shrink: 0;
+        }
+        .brand-lockup img { display: block; flex-shrink: 0; height: 45px; width: auto; }
+        .brand-divider { height: 26px; width: 2px; flex-shrink: 0; background-color: #cbd5e1; }
+        .brand-app {
+            flex-direction: column;
+            justify-content: center;
+            text-align: left;
+            line-height: 1.1;
+            padding-right: 12px;
+            font-family: 'Inter', sans-serif;
+        }
+        .brand-app-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            margin-bottom: 2px;
+            color: #0f172a;
+        }
+        .brand-app-sub {
+            font-size: 9px;
+            font-weight: 500;
+            white-space: nowrap;
+            color: #64748b;
+        }
+
         .copyable-text {
             user-select: text !important;
             -webkit-user-select: text !important;
@@ -86,6 +125,80 @@
             border: 1.5px solid #dc3545;
         }
         .btn-nav-danger:hover { background-color: #bb2d3b; }
+        /* Efek hover kuning seperti tombol navbar, border tetap biru */
+        .btn-hover-kuning { transition: all 0.2s ease-in-out; }
+        .btn-hover-kuning:hover,
+        .btn-hover-kuning:active,
+        .btn-hover-kuning:focus {
+            background-color: #FFCD02 !important;
+            color: #313E5E !important;
+            border-color: #313E5E !important;
+        }
+
+        /* Notifikasi: modal kecil di tengah, bentuk card */
+        .notif-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;   /* di atas modal edit (99999) dan modal sesi habis */
+            padding: 16px;
+        }
+        .notif-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 420px;
+            padding: 26px 26px 22px;
+            text-align: center;
+            animation: notif-pop 0.15s ease-out;
+        }
+        @keyframes notif-pop {
+            from { transform: scale(0.94); opacity: 0; }
+            to   { transform: scale(1);    opacity: 1; }
+        }
+        .notif-icon { display: block; font-size: 3.5rem; line-height: 1; margin: 0 auto 12px; }
+        .notif-icon.notif-warning { color: #f59e0b; }
+        .notif-icon.notif-error   { color: #dc3545; }
+        .notif-icon.notif-success { color: #198754; }
+        .notif-title {
+            font-size: 13px; font-weight: 800; letter-spacing: 1.5px;
+            text-transform: uppercase; margin-bottom: 8px;
+        }
+        .notif-success .notif-title { color: #16a34a; }
+        .notif-error   .notif-title { color: #dc2626; }
+        .notif-warning .notif-title { color: #d97706; }
+        .notif-msg {
+            font-size: 17px; font-weight: 600; line-height: 1.45;
+            color: #1f2937; margin-bottom: 20px; word-break: break-word;
+        }
+        /* error: latar merah soft; success/warning tetap putih */
+        .notif-card.notif-error { background: #fdecec; }
+        .notif-card.notif-warning { background: #fff8e1; }   /* warning: kuning soft */
+        .notif-card .notif-btn {
+            border: 0; border-radius: 8px;
+            padding: 9px 32px; font-weight: 600; cursor: pointer;
+            background-color: #6c757d; color: #fff;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .notif-card .notif-btn:hover {
+            background-color: #313E5E; color: #FECD08;
+        }
+
+        /* Tombol pilihan di kartu warning: warna card saat normal, biru DJKI saat hover */
+        .notif-card .notif-pilihan {
+            background-color: transparent; color: #313E5E;
+            border: 1.5px solid #313E5E; border-radius: 8px;
+            padding: 9px 16px; font-weight: 600; cursor: pointer;
+            white-space: normal; word-break: break-word;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .notif-card .notif-pilihan:hover {
+            background-color: #313E5E; color: #FECD08;
+        }
     </style>
 
     {% block extra_style %}{% endblock %}
@@ -96,10 +209,15 @@
     <div class="container-fluid d-flex justify-content-between align-items-center">
 
         <div class="d-flex align-items-center gap-3">
-            <img src="{% static 'logo_dgip.png' %}" alt="Logo DGIP"
-                style="display: block; flex-shrink: 0; height: 55px; width: auto;
-                        background-color: white; padding: 5px; border-radius: 8px; margin-top: -2px;">
-            <span class="brand-text copyable-text">{% block brand_title %}Penelusuran Fonetik{% endblock %}</span>
+            <div class="brand-lockup">
+                <img src="{% static 'logodjki.webp' %}" alt="Logo DJKI">
+                <div class="brand-divider d-none d-lg-block"></div>
+                <div class="brand-app d-none d-lg-flex">
+                    <span class="brand-app-title">Penelusuran</span>
+                    <span class="brand-app-sub">Fonetik dan Logo</span>
+                </div>
+            </div>
+            <span class="brand-text copyable-text">{% block brand_title %}Penelusuran Merek{% endblock %}</span>
         </div>
 
         <div class="d-flex flex-column align-items-end">
@@ -112,7 +230,7 @@
                 <div class="text-white"
                     style="font-size: 0.85rem; border-left: 1px solid rgba(255,255,255,0.3);
                             padding-left: 12px; white-space: nowrap;">
-                    User : <span class="fw-bold text-warning">{{ user.username }}</span>
+                    {% if user.is_staff %}Admin{% else %}User{% endif %} : <span class="fw-bold text-warning">{{ user.username }}</span>
                 </div>
                 {% endif %}
             </div>
@@ -155,6 +273,48 @@
     }
     setInterval(updateClock, 1000);
     updateClock();
+</script>
+
+<script>
+    // Ikon Bootstrap Icons: error = pengeras suara, warning = segitiga, success = centang
+    const NOTIF_IKON = {
+        error:   'bi-volume-up-fill',
+        warning: 'bi-exclamation-triangle-fill',
+        success: 'bi-check-circle-fill',
+    };
+
+    // Notifikasi modal kecil di tengah (tipe: 'success' | 'error' | 'warning')
+    function tampilkanNotif(tipe, pesan, setelahTutup) {
+        if (!['success', 'error', 'warning'].includes(tipe)) tipe = 'error';
+        const judul = { success: 'Berhasil', error: 'Error', warning: 'Peringatan' }[tipe];
+        const el = document.createElement('div');
+        el.className = 'notif-backdrop';
+        el.innerHTML =
+            '<div class="notif-card notif-' + tipe + '" role="alertdialog" aria-modal="true">' +
+            '<i class="bi ' + NOTIF_IKON[tipe] + ' notif-icon notif-' + tipe + '"></i>' +
+            '<div class="notif-title"></div><div class="notif-msg"></div>' +
+            '<button type="button" class="notif-btn">OK</button></div>';
+        el.querySelector('.notif-title').textContent = judul;
+        el.querySelector('.notif-msg').textContent = pesan;     // teks biasa, bukan HTML (aman dari XSS)
+        const tutup = () => {
+            document.removeEventListener('keydown', onKey);
+            el.remove();
+            if (setelahTutup) setelahTutup();
+        };
+        const onKey = (e) => { if (e.key === 'Escape' || e.key === 'Enter') tutup(); };
+        el.querySelector('.notif-btn').addEventListener('click', tutup);
+        el.addEventListener('click', (e) => { if (e.target === el) tutup(); });
+        document.addEventListener('keydown', onKey);
+        document.body.appendChild(el);
+        el.querySelector('.notif-btn').focus();
+    }
+
+    // Pintasan untuk respons JSON dari server (status: ok / success / warning / error)
+    function notifDariRespons(data, setelahTutup) {
+        const tipe = (data.status === 'ok' || data.status === 'success') ? 'success'
+                : (data.status === 'warning') ? 'warning' : 'error';
+        tampilkanNotif(tipe, data.message, setelahTutup);
+    }
 </script>
 
 {% block extra_script %}{% endblock %}

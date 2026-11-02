@@ -16,7 +16,18 @@ CSV_ENCODINGS_TRY = ['utf-8-sig', 'utf-8', 'latin-1', 'cp1252']
 # ================================================================
 ALLOWED_LOGO_EXT = {'png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'tif', 'tiff'}
 MAX_LOGO_SIZE_MB = 10
-LOGO_SIM_THRESHOLD = 0.75
+LOGO_SIM_THRESHOLD = 0.70
+
+# --- v5: aturan per jenis logo (embedding warna, tanpa grayscale) ---
+LOGO_TEXT_RATIO_TEKS   = 0.99   # rasio teks >= ini -> 'teks' (wordmark)
+LOGO_TEXT_RATIO_SIMBOL = 0.15   # rasio teks <= ini -> 'simbol'; di antaranya 'campuran'
+LOGO_OCR_MIN_CONF      = 0.30
+LOGO_TEXT_RATIO_MARGIN = 0.05   # lebar zona abu-abu di sekitar batas jenis (hanya untuk analisis)
+
+LOGO_SIM_THRESHOLD_SIMBOL    = 0.60
+LOGO_SIM_THRESHOLD_CAMPURAN  = 0.80
+LOGO_SIM_THRESHOLD_TEKS      = 0.97   # buat logo teks, vector cuma penanda gambar hampir identik
+LOGO_PHONETIC_THRESHOLD_TEKS = 0.70   # divalidasi: tangkap 93.5% nama_diubah, FP ~0%
 
 # ================================================================
 # import di services.py (cari_logo_mirip)
@@ -37,7 +48,7 @@ MAGIC_SIGNATURES = [
     b'II*\x00', b'MM\x00*', b'RIFF',
 ]
 
-RATE_LIMIT_LOGO_SEARCH_MAX = 10
+RATE_LIMIT_LOGO_SEARCH_MAX = 3
 RATE_LIMIT_LOGO_SEARCH_WINDOW_SECONDS = 60
 CACHE_KEY_PREFIX_RATE_LIMIT = 'ratelimit_logo_'
 MAX_URL_IMAGE_MB = 5

@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Penelusuran Logo - Penelusuran Fonetik{% endblock %}
+{% block title %}Penelusuran Logo - Penelusuran Merek{% endblock %}
 
-{% block brand_title %}{% if user.is_staff %}Admin Panel - {% endif %}Penelusuran Fonetik{% endblock %}
+{% block brand_title %}{% if user.is_staff %}Admin Panel - {% endif %}Penelusuran Logo{% endblock %}
 
 {% block navbar_buttons %}
     {% if user.is_authenticated %}
@@ -36,9 +36,9 @@
         transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
         cursor: pointer;
     }
-    /* Tab Fonetik — hover & active: kuning DJKI */
-    .tab-fonetik:hover,
-    .tab-fonetik.active { color: #313E5E !important; background: #FFCD02; border-color: #FFCD02; }
+    /* Tab Merek — hover & active: kuning DJKI */
+    .tab-merek:hover,
+    .tab-merek.active { color: #313E5E !important; background: #FFCD02; border-color: #FFCD02; }
     /* Tab Logo — hover & active: biru DJKI */
     .tab-logo:hover,
     .tab-logo.active { color: white !important; background: #313E5E; border-color: #313E5E; }
@@ -129,8 +129,8 @@
 <div class="container mb-5">
 
     <div class="tab-bar">
-        <a href="{% url 'search_view' %}" class="tab-item tab-fonetik">
-            <i class="bi bi-soundwave"></i>Fonetik
+        <a href="{% url 'search_view' %}" class="tab-item tab-merek">
+            <i class="bi bi-soundwave"></i>Merek
         </a>
         <a href="{% url 'logo_search' %}" class="tab-item tab-logo active">
             <i class="bi bi-image"></i>Logo
@@ -167,24 +167,27 @@
                     accept=".png,.jpg,.jpeg,.gif,.bmp,.webp,.tif,.tiff"
                     style="display:none;">
                 <input type="hidden" id="logoUrlInput" name="logo_url">
+                <input type="hidden" id="tmpLogoPathInput" name="tmp_logo_path" value="{{ tmp_logo_path|default:'' }}">
             </div>
 
             <div class="mx-auto mt-3 mb-1 position-relative" style="max-width:400px;">
                 <label class="form-label small text-muted mb-1" for="namaMerekInput">
-                    Nama merek <span class="text-muted">(opsional — bantu perketat hasil)</span>
+                    Nama merek <span class="text-muted">(opsional)</span>
                 </label>
                 <input type="text" id="namaMerekInput" name="nama_merek" class="form-control"
                     placeholder="Ketik nama merek..." autocomplete="off"
                     value="{{ nama_merek_qry|default:'' }}">
                 <div id="merekSuggestions" class="list-group position-absolute w-100"
                     style="z-index:1000; display:none; max-height:200px; overflow-y:auto;"></div>
-            </div>
 
-            {% if error %}
-            <div class="alert alert-danger mx-4 mt-3 mb-0">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" name="validasi_ocr"
+                        id="validasiOcrCheckbox" value="1" checked>
+                    <label class="form-check-label small text-muted" for="validasiOcrCheckbox">
+                        Validasi Logo Dengan Nama Merek
+                    </label>
+                </div>
             </div>
-            {% endif %}
 
             <div class="upload-action-row">
                 <span id="spinner-wrap" style="display:none; color:#6c757d; font-size:0.85rem;">
@@ -198,6 +201,14 @@
             </div>
         </form>
     </div>
+
+    {% if error %}
+        {% include 'partials/notif_card.html' with tipe='error' pesan=error %}
+    {% endif %}
+
+    {% if peringatan_nama %}
+        {% include 'partials/notif_card.html' with tipe='warning' pesan='Nama merek yang diketik tidak cocok dengan teks yang terdeteksi di gambar.' isi_template='partials/pilihan_nama_merek.html' %}
+    {% endif %}
 
     <div class="row g-3 mb-4">
         <div class="col-6">
@@ -220,9 +231,8 @@
         </div>
     </div>
 
-    {% if hasil_visual or hasil_rescue %}
     {% if hasil_rescue %}
-    <h6 class="text-muted mt-4 mb-2">Cocok berdasarkan nama merek</h6>
+    <h6 class="text-muted mt-2 mb-2">Merek serupa sudah terdaftar</h6>
     <div class="row g-3">
         {% for item in hasil_rescue %}
         <div class="col-lg-3 col-md-4 col-sm-6">
@@ -231,7 +241,7 @@
                     {% if item.logo_url %}
                     <img src="{{ item.logo_url }}" alt="{{ item.nama_merek }}"
                     style="cursor:zoom-in;"
-                    onclick="showZoom('{{ item.logo_url }}', '{{ item.nama_merek }}')">
+                    onclick="showZoom(this.src)">
                     {% else %}
                     <i class="bi bi-image" style="font-size:40px;color:#dee2e6;"></i>
                     {% endif %}
@@ -247,8 +257,8 @@
     </div>
     {% endif %}
 
-        {% if hasil_visual %}
-        <h6 class="text-muted mt-2 mb-2">Cocok secara visual</h6>
+    {% if hasil_visual %}
+    <h6 class="text-muted mt-4 mb-2">Cocok secara visual</h6>
     <div class="row g-3">
         {% for item in hasil_visual %}
         <div class="col-lg-3 col-md-4 col-sm-6">
@@ -257,7 +267,7 @@
                     {% if item.logo_url %}
                     <img src="{{ item.logo_url }}" alt="{{ item.nama_merek }}"
                     style="cursor:zoom-in;"
-                    onclick="showZoom('{{ item.logo_url }}', '{{ item.nama_merek }}')">
+                    onclick="showZoom(this.src)">
                     {% else %}
                     <i class="bi bi-image" style="font-size:40px;color:#dee2e6;"></i>
                     {% endif %}
@@ -277,11 +287,11 @@
     </div>
     {% endif %}
 
-{% else %}
+    {% if not hasil_visual and not hasil_rescue and not peringatan_nama %}
     <div class="empty-state">
         {% if query_logo %}
             <i class="bi bi-search"></i>
-            <p>Tidak ada logo yang mirip ditemukan<br><small class="text-muted">Threshold kemiripan ≥ 75%</small></p>
+            <p>Tidak ada logo yang cukup mirip ditemukan<br><small class="text-muted">Batas kemiripan menyesuaikan jenis logo (simbol, campuran, teks)</small></p>
         {% else %}
             <i class="bi bi-image"></i>
             <p>Upload logo untuk mulai pengecekan kemiripan</p>
@@ -301,6 +311,7 @@
 <script>
     const logoInput       = document.getElementById('logoInput');
     const logoUrlInput    = document.getElementById('logoUrlInput');
+    const tmpLogoPathInput = document.getElementById('tmpLogoPathInput');
     const searchBtn       = document.getElementById('searchBtn');
     const dropZone        = document.getElementById('dropZone');
     const previewWrap     = document.getElementById('preview-wrap');
@@ -309,27 +320,34 @@
     const dropPlaceholder = document.getElementById('drop-placeholder');
     const spinnerWrap     = document.getElementById('spinner-wrap');
 
+    function updateSearchButtonState() {
+        const hasImage = previewWrap.style.display === 'block';
+        searchBtn.disabled = !hasImage;
+    }
+
     function showPreview(file) {
+        tmpLogoPathInput.value = '';   // gambar baru menggantikan file sementara lama
         const reader = new FileReader();
         reader.onload = e => {
             previewImg.src                = e.target.result;
             previewName.textContent       = file.name;
             dropPlaceholder.style.display = 'none';
             previewWrap.style.display     = 'block';
-            searchBtn.disabled            = false;
+            updateSearchButtonState();
         };
         reader.readAsDataURL(file);
     }
 
     function showPreviewUrl(url) {
+        tmpLogoPathInput.value = '';
         previewImg.src                = url;
         previewName.textContent       = 'Logo dari URL';
         dropPlaceholder.style.display = 'none';
         previewWrap.style.display     = 'block';
-        searchBtn.disabled            = false;
+        updateSearchButtonState();
     }
 
-    function showZoom(url, nama) {
+    function showZoom(url) {
         document.getElementById('zoomImg').src = url;
         document.getElementById('zoomModal').style.display = 'flex';
     }
@@ -390,6 +408,8 @@
     let debounceTimer = null;
 
     namaMerekInput.addEventListener('input', function() {
+        updateSearchButtonState();
+
         const q = this.value.trim();
         clearTimeout(debounceTimer);
 
@@ -433,8 +453,27 @@
 
     document.getElementById('logoForm').addEventListener('submit', function() {
         searchBtn.disabled        = true;
-        searchBtn.textContent     = 'Memproses...';
         spinnerWrap.style.display = 'inline';
     });
 </script>
+
+{% if rate_limit_sisa %}
+<script>
+    // Hitung mundur di kartu "Terlalu banyak pencarian" (berbasis jam, jadi tidak melenceng)
+    (function () {
+        const msg = document.querySelector('.notif-card .notif-msg');
+        if (!msg) return;
+        const selesai = Date.now() + {{ rate_limit_sisa }} * 1000;
+        function tulis() {
+            const sisa = Math.max(0, Math.ceil((selesai - Date.now()) / 1000));
+            msg.textContent = sisa > 0
+                ? 'Terlalu banyak pencarian. Coba lagi dalam ' + sisa + ' detik.'
+                : 'Sudah bisa mencari lagi. Silakan coba kembali.';
+            if (sisa <= 0) clearInterval(timer);
+        }
+        const timer = setInterval(tulis, 250);
+        tulis();
+    })();
+</script>
+{% endif %}
 {% endblock %}

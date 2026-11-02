@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Update DB Merek - Penelusuran Fonetik{% endblock %}
+{% block title %}Update DB Merek - Penelusuran Merek{% endblock %}
 
-{% block brand_title %}Admin Panel - Penelusuran Fonetik{% endblock %}
+{% block brand_title %}Admin Panel - Update DB Merek{% endblock %}
 
 {% block navbar_buttons %}
 <a href="{% url 'search_view' %}" class="btn-nav-custom btn-nav-light">
         <i class="bi bi-soundwave"></i> Cari Merek
     </a>
-    <a href="{% url 'database_log' %}?from=fonetik" class="btn-nav-custom btn-nav-light">
+    <a href="{% url 'database_log' %}?from=merek" class="btn-nav-custom btn-nav-light">
         <i class="bi bi-journal-text"></i> Log Database
     </a>
     <form action="{% url 'logout' %}" method="post" class="d-inline m-0 p-0">
@@ -60,13 +60,18 @@
     }
     .upload-zone:hover { background: #f1f3f5; border-color: #313E5E; }
     .upload-zone.dragover { background: #eef2ff; border-color: #313E5E; }
-    .btn-submit-upload {
-        background-color: #313E5E; color: white; font-weight: 700;
+    .btn.btn-submit-upload {
+        background-color: #4a5a85; color: #fff; font-weight: 700;
         padding: 12px 35px; border-radius: 8px; margin-top: 20px; border: none;
-        transition: background 0.2s;
+        transition: background-color 0.2s, color 0.2s;
     }
-    .btn-submit-upload:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-submit-upload:not(:disabled):hover { background-color: #232c45; }
+    .btn.btn-submit-upload:disabled {
+        background-color: #4a5a85; color: #fff; opacity: 0.55; cursor: not-allowed;
+    }
+    .btn.btn-submit-upload:not(:disabled):hover,
+    .btn.btn-submit-upload:not(:disabled):active {
+        background-color: #FECD08; color: #313E5E;
+    }
 
     .min-rows-note {
         background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px;
@@ -96,7 +101,6 @@
                         <i class="bi bi-plus-lg"></i> Tambah
                     </button>
                 </div>
-                <div id="manual-result" class="mt-3" style="display:none;"></div>
             </div>
 
             <!-- ══ BAGIAN 2: UPLOAD FILE ══ -->
@@ -129,15 +133,6 @@
                             role="progressbar" style="width:0%">0%</div>
                     </div>
 
-                    <div class="alert alert-success mt-3" id="success-msg" style="display:none;">
-                        <i class="bi bi-check-circle-fill me-2"></i>
-                        <span id="success-text">Database berhasil diperbarui!</span>
-                    </div>
-                    <div class="alert alert-danger mt-3" id="error-msg" style="display:none;">
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                        <span id="error-text">Terjadi kesalahan.</span>
-                    </div>
-
                     <div class="text-center">
                         <button type="button" class="btn btn-submit-upload" id="uploadBtn" disabled>
                             MULAI UPLOAD
@@ -156,7 +151,6 @@
 /* ── MANUAL ENTRY ── */
 const manualInput  = document.getElementById('manualInput');
 const btnAddManual = document.getElementById('btnAddManual');
-const manualResult = document.getElementById('manual-result');
 
 manualInput.addEventListener('input', function() {
     btnAddManual.disabled = this.value.trim().length === 0;
@@ -183,19 +177,13 @@ btnAddManual.addEventListener('click', function() {
     })
     .then(r => r.json())
     .then(res => {
-        const isOk    = res.status === 'success';
-        const isWarn  = res.status === 'warning';
-        const cls     = isOk ? 'alert-success' : (isWarn ? 'alert-warning' : 'alert-danger');
-        const icon    = isOk ? 'check-circle-fill' : (isWarn ? 'exclamation-circle-fill' : 'x-circle-fill');
-        manualResult.innerHTML =
-            `<div class="alert ${cls}"><i class="bi bi-${icon} me-2"></i>${res.message}</div>`;
-        manualResult.style.display = 'block';
+        const isOk   = res.status === 'success';
+        const isWarn = res.status === 'warning';
+        tampilkanNotif(isOk ? 'success' : (isWarn ? 'warning' : 'error'), res.message);
         if (isOk || isWarn) { manualInput.value = ''; }
     })
     .catch(() => {
-        manualResult.innerHTML =
-            '<div class="alert alert-danger"><i class="bi bi-x-circle-fill me-2"></i>Gagal menghubungi server.</div>';
-        manualResult.style.display = 'block';
+        tampilkanNotif('error', 'Gagal menghubungi server.');
     })
     .finally(() => {
         btnAddManual.disabled  = false;
@@ -223,8 +211,6 @@ fileInput.addEventListener('change', function() {
     if (this.files && this.files[0]) {
         fileNameDisplay.textContent = 'File: ' + this.files[0].name;
         uploadBtn.disabled = false;
-        document.getElementById('error-msg').style.display   = 'none';
-        document.getElementById('success-msg').style.display = 'none';
     }
 });
 
@@ -247,21 +233,19 @@ uploadBtn.addEventListener('click', function() {
         }
     };
     xhr.onload = function() {
-        try {
-            const res = JSON.parse(xhr.responseText);
-            if (xhr.status === 200) {
-                document.getElementById('success-text').textContent = res.message || 'Database berhasil diperbarui!';
-                document.getElementById('success-msg').style.display = 'block';
-                setTimeout(() => location.reload(), 2500);
-            } else {
-                document.getElementById('error-text').textContent = res.message || res.error || 'Terjadi kesalahan.';
-                document.getElementById('error-msg').style.display = 'block';
-                uploadBtn.disabled = false;
-            }
-        } catch(e) {
-            document.getElementById('error-msg').style.display = 'block';
+        let res = null;
+        try { res = JSON.parse(xhr.responseText); } catch (e) {}
+        if (res && xhr.status === 200) {
+            tampilkanNotif('success', res.message || 'Database berhasil diperbarui!',
+                           () => location.reload());
+        } else {
+            tampilkanNotif('error', (res && (res.message || res.error)) || 'Terjadi kesalahan.');
             uploadBtn.disabled = false;
         }
+    };
+    xhr.onerror = function() {
+        tampilkanNotif('error', 'Gagal menghubungi server.');
+        uploadBtn.disabled = false;
     };
     xhr.send(formData);
 });
